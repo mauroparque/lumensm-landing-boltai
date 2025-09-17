@@ -3,36 +3,18 @@ name: Deploy Landing Robust
 on:
   push:
     branches:
-      - main  # rama que dispara el deploy
+      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Clonar el repo
+      # 1. Clonar el repo (opcional, sirve para comprobar que Actions funciona)
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Configurar Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.20.8'
-
-      # 3. Instalar dependencias
-      - name: Install dependencies
-        run: |
-          cd /opt/landing/lumensm-landing-boltai
-          npm ci
-
-      # 4. Build
-      - name: Build
-        run: |
-          cd lumensm-landing-boltai
-          npm run build
-
-      # 5. Deploy con backup, rollback y limpieza de backups antiguos
+      # 2. Deploy completo vía SSH
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -41,28 +23,28 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           script: |
-            TARGET="/opt/landing/lumensm-landing-boltai/dist"
-            BACKUP="/opt/landing/lumensm-landing-boltai/dist_backup_$(date +%Y%m%d%H%M%S)"
-
             echo "=== Iniciando despliegue ==="
+            cd /opt/landing/lumensm-landing-boltai
+
+            # Hacer pull de la rama main
+            git fetch --all
+            git reset --hard origin/main
+
+            # Instalar dependencias y build
+            npm ci
+            npm run build
 
             # Backup de la versión actual
+            TARGET="/opt/landing/lumensm-landing-boltai/dist"
+            BACKUP="/opt/landing/lumensm-landing-boltai/dist_backup_$(date +%Y%m%d%H%M%S)"
             if [ -d "$TARGET" ]; then
               echo "Creando backup de la versión actual en $BACKUP"
               mv "$TARGET" "$BACKUP"
             fi
 
-            # Crear carpeta nueva
+            # Crear carpeta nueva y copiar build
             mkdir -p "$TARGET"
-
-            # Sincronizar los archivos nuevos
-            rsync -avz --delete ~/lumensm-landing-boltai/dist/ "$TARGET/"
-            if [ $? -ne 0 ]; then
-              echo "Error en despliegue. Restaurando backup..."
-              rm -rf "$TARGET"
-              mv "$BACKUP" "$TARGET"
-              exit 1
-            fi
+            cp -r ./dist/* "$TARGET/"
 
             echo "Despliegue completado con éxito."
 
@@ -70,5 +52,4 @@ jobs:
             echo "Limpiando backups antiguos..."
             ls -dt /opt/landing/lumensm-landing-boltai/dist_backup_* | tail -n +6 | xargs -r rm -rf
             echo "Backups antiguos eliminados."
-
             echo "=== Fin de despliegue ==="
