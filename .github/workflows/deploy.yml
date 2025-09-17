@@ -23,7 +23,7 @@ jobs:
       # 3. Instalar dependencias
       - name: Install dependencies
         run: |
-          cd lumensm-landing-boltai
+          cd /opt/landing/lumensm-landing-boltai
           npm ci
 
       # 4. Build
