@@ -10,11 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Clonar el repo (opcional, sirve para comprobar que Actions funciona)
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Deploy completo vía SSH
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -26,30 +24,31 @@ jobs:
             echo "=== Iniciando despliegue ==="
             cd /opt/landing/lumensm-landing-boltai
 
-            # Hacer pull de la rama main
             git fetch --all
             git reset --hard origin/main
 
-            # Instalar dependencias y build
             npm ci
             npm run build
 
-            # Backup de la versión actual
-            TARGET="/opt/landing/lumensm-landing-boltai/dist"
-            BACKUP="/opt/landing/lumensm-landing-boltai/dist_backup_$(date +%Y%m%d%H%M%S)"
+            # Paths
+            BUILD_DIR="./dist"
+            TARGET="/opt/landing/lumensm-landing-boltai/current"
+            BACKUP="/opt/landing/lumensm-landing-boltai/backup_$(date +%Y%m%d%H%M%S)"
+
+            # Backup versión actual
             if [ -d "$TARGET" ]; then
-              echo "Creando backup de la versión actual en $BACKUP"
+              echo "Creando backup en $BACKUP"
               mv "$TARGET" "$BACKUP"
             fi
 
-            # Crear carpeta nueva y copiar build
+            # Crear carpeta destino y copiar nuevo build
             mkdir -p "$TARGET"
-            cp -r ./dist/* "$TARGET/"
+            cp -r "$BUILD_DIR"/* "$TARGET/"
 
             echo "Despliegue completado con éxito."
 
-            # Limpiar backups antiguos (mantener solo los últimos 5)
+            # Limpiar backups antiguos (mantener últimos 5)
             echo "Limpiando backups antiguos..."
-            ls -dt /opt/landing/lumensm-landing-boltai/dist_backup_* | tail -n +6 | xargs -r rm -rf
+            ls -dt /opt/landing/lumensm-landing-boltai/backup_* | tail -n +6 | xargs -r rm -rf
             echo "Backups antiguos eliminados."
             echo "=== Fin de despliegue ==="
