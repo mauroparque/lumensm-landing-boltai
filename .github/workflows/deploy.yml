@@ -7,9 +7,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout repository in GitHub runner
         uses: actions/checkout@v3
-      - name: Deploy to server
+
+      - name: Deploy to server with detailed debug
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -17,12 +18,30 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           script: |
-            echo "=== Iniciando despliegue ==="
-            cd /opt/landing/lumensm-landing-boltai
-            git fetch --all
-            git reset --hard origin/main
-            npm ci
-            npm run build
-            echo "Archivos en dist:"
+            echo "=== Inicio Despliegue ==="
+
+            echo "1. Entrando en carpeta del proyecto"
+            cd /opt/landing/lumensm-landing-boltai || { echo 'ERROR: No se pudo entrar al directorio'; exit 1; }
+
+            echo "2. Estado actual del repo antes del fetch"
+            git status
+
+            echo "3. Ejecutando git fetch --all"
+            git fetch --all || { echo 'ERROR: git fetch falló'; exit 1; }
+
+            echo "4. Reseteando al origen main"
+            git reset --hard origin/main || { echo 'ERROR: git reset falló'; exit 1; }
+
+            echo "5. Estado actual del repo luego del reset"
+            git status
+
+            echo "6. Instalando dependencias con npm ci"
+            npm ci || { echo 'ERROR: npm ci falló'; exit 1; }
+
+            echo "7. Ejecutando build con npm run build"
+            npm run build || { echo 'ERROR: npm run build falló'; exit 1; }
+
+            echo "8. Listado archivos en carpeta dist"
             ls -l ./dist
-            echo "Despliegue completado con éxito."
+
+            echo "=== Fin Despliegue ==="
