@@ -1,18 +1,14 @@
 name: Deploy Landing Robust
-
 on:
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -23,36 +19,10 @@ jobs:
           script: |
             echo "=== Iniciando despliegue ==="
             cd /opt/landing/lumensm-landing-boltai
-
-            # Hacer pull de los últimos cambios
             git fetch --all
             git reset --hard origin/main
-
-            # Instalar dependencias y construir
             npm ci
             npm run build
-
-            # Paths
-            BUILD_DIR="./dist"
-            TARGET="/opt/landing/lumensm-landing-boltai/current"
-            BACKUP="/opt/landing/lumensm-landing-boltai/backup_$(date +%Y%m%d%H%M%S)"
-
-            # Crear backup si existe la versión actual
-            if [ -d "$TARGET" ]; then
-              echo "Creando backup en $BACKUP"
-              mv "$TARGET" "$BACKUP"
-            fi
-
-            # Crear carpeta destino y copiar nuevo build
-            mkdir -p "$TARGET"
-            cp -r "$BUILD_DIR"/* "$TARGET/"
-
-            # Asegurar permisos correctos
-            chown -R $USER:$USER "$TARGET"
-            chmod -R 755 "$TARGET"
-
-            echo "=== Fin de despliegue ==="
-
-            # Limpiar backups antiguos (mantener últimos 5)
-            echo "Limpiando backups antiguos..."
-            ls -dt /opt/landing/lumensm-landing-boltai/backup_* | tail -n +6 | xargs -r rm -rf
+            echo "Archivos en dist:"
+            ls -l ./dist
+            echo "Despliegue completado con éxito."
