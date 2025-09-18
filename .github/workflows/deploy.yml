@@ -22,33 +22,43 @@ jobs:
           port: 22
           script: |
             echo "=== Iniciando despliegue ==="
-            cd /opt/landing/lumensm-landing-boltai
-
-            git fetch --all
-            git reset --hard origin/main
-
+            
+            # Crear un directorio temporal para el nuevo despliegue
+            TEMP_DIR=$(mktemp -d)
+            echo "Usando directorio temporal: $TEMP_DIR"
+            
+            # Clonar el repositorio en el directorio temporal
+            git clone https://github.com/mauroparque/lumensm-landing-boltai.git $TEMP_DIR
+            cd $TEMP_DIR
+            
+            # Instalar dependencias y construir
             npm ci
             npm run build
-
+            
             # Paths
-            BUILD_DIR="./dist"
+            BUILD_DIR="$TEMP_DIR/dist"
             TARGET="/opt/landing/lumensm-landing-boltai/current"
             BACKUP="/opt/landing/lumensm-landing-boltai/backup_$(date +%Y%m%d%H%M%S)"
-
-            # Backup versión actual
+            
+            # Crear backup si existe la versión actual
             if [ -d "$TARGET" ]; then
               echo "Creando backup en $BACKUP"
               mv "$TARGET" "$BACKUP"
             fi
-
+            
             # Crear carpeta destino y copiar nuevo build
             mkdir -p "$TARGET"
             cp -r "$BUILD_DIR"/* "$TARGET/"
-
-            echo "Despliegue completado con éxito."
-
+            
+            # Asegurar permisos correctos
+            chown -R $USER:$USER "$TARGET"
+            chmod -R 755 "$TARGET"
+            
+            # Limpiar
+            rm -rf $TEMP_DIR
+            
             # Limpiar backups antiguos (mantener últimos 5)
             echo "Limpiando backups antiguos..."
             ls -dt /opt/landing/lumensm-landing-boltai/backup_* | tail -n +6 | xargs -r rm -rf
-            echo "Backups antiguos eliminados."
+            
             echo "=== Fin de despliegue ==="
