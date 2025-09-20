@@ -747,7 +747,7 @@ p {
 .whatsapp-float {
     position: fixed;
     bottom: 100px;
-    right: 20px;
+    right: 5px;
     width: 55px;
     height: 55px;
     background-color: #25D366;
