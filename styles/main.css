@@ -772,7 +772,7 @@ p {
 .scroll-to-top {
     position: fixed;
     bottom: 20px;        /* MÁS ABAJO */
-    right: 10px;         /* Misma alineación derecha */
+    right: 5px;         /* Misma alineación derecha */
     width: 50px;
     height: 50px;
     background-color: var(--primary-color);
