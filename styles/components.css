@@ -39,7 +39,6 @@
 }
 
 /* Fade In Up Animation */
-/*
 .service-card, 
 .blog-card, 
 .testimonial-card, 
@@ -49,19 +48,18 @@
     transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
-*/
+
 .fade-in-up {
     opacity: 1 !important;
     transform: translateY(0) !important;
 }
 
 /* Lazy Loading Images */
-/*
 img.lazy {
     opacity: 0;
     transition: opacity 0.3s ease;
 }
-*/
+
 img.loaded {
     opacity: 1;
 }
