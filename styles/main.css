@@ -746,7 +746,7 @@ p {
 /* WhatsApp Float Button */
 .whatsapp-float {
     position: fixed;
-    bottom: 90px;
+    bottom: 120px;
     right: 20px;
     width: 55px;
     height: 55px;
