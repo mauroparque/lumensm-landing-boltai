@@ -29,6 +29,10 @@
     <meta name="author" content="Lumen Salud Mental">
     <meta name="theme-color" content="#178E79">
 
+    <!-- Preload hero image for LCP -->
+    <link rel="preload" as="image" href="assets/hero/hero-1200.avif" type="image/avif">
+    <link rel="preload" as="image" href="assets/hero/hero-1200.webp" type="image/webp">
+    
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/components.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -90,7 +94,31 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Consulta psicológica profesional - Psicólogo con paciente en ambiente cálido y seguro">
+                    <picture>
+                        <!-- AVIF format -->
+                        <source
+                            type="image/avif"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            srcset="assets/hero/hero-480.avif 480w,
+                                    assets/hero/hero-800.avif 800w,
+                                    assets/hero/hero-1200.avif 1200w,
+                                    assets/hero/hero-1600.avif 1600w">
+                        <!-- WebP format -->
+                        <source
+                            type="image/webp"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            srcset="assets/hero/hero-480.webp 480w,
+                                    assets/hero/hero-800.webp 800w,
+                                    assets/hero/hero-1200.webp 1200w,
+                                    assets/hero/hero-1600.webp 1600w">
+                        <!-- Fallback JPG -->
+                        <img 
+                            src="https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=800"
+                            alt="Consulta psicológica profesional - Psicólogo con paciente en ambiente cálido y seguro"
+                            width="1600"
+                            height="1067"
+                            fetchpriority="high">
+                    </picture>
                 </div>
             </div>
         </section>
@@ -410,7 +438,7 @@
         <i class="fab fa-whatsapp" aria-hidden="true"></i>
     </a>
 
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/main.js" defer></script>
 
 </body>
 </html>
