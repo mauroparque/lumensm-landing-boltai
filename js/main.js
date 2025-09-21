@@ -176,41 +176,44 @@ function setupFormHandling() {
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
 
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        try {
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-
-            // IMPROVED: Enhanced validation that returns structured errors
-            const validationRules = {
-                nombre: { 
-                    required: true, 
-                    minLength: 2,
-                    pattern: /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
-                    message: 'Nombre debe contener solo letras'
-                },
-                email: { 
-                    required: true, 
-                    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: 'Email inválido'
-                },
-                telefono: {
-                    pattern: /^[\d\s\-\+\(\)]+$/,
-                    message: 'Teléfono inválido'
-                },
-                mensaje: { 
-                    required: true, 
-                    minLength: 10,
-                    maxLength: 500,
-                    message: 'Mensaje debe tener entre 10 y 500 caracteres'
-                },
-                servicio: { 
-                    required: true,
-                    message: 'Selecciona un servicio'
-                }
-            };
+contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    
+    // Mostrar loading
+    submitButton.textContent = 'Enviando...';
+    submitButton.disabled = true;
+    
+    try {
+        const response = await fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: new FormData(this)
+        });
+        
+        if (response.ok) {
+            // Éxito
+            showNotification('¡Mensaje enviado correctamente! Te contactaré pronto.', 'success');
+            this.reset();
+            clearFormErrors();
+        } else {
+            // Error del servidor
+            throw new Error('Error en el servidor');
+        }
+    } catch (error) {
+        // Error de red o otro
+        showNotification('Error al enviar el mensaje. Por favor, intenta nuevamente.', 'error');
+        console.error('Error:', error);
+    } finally {
+        // Restaurar botón
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    }
+});
 
             // FIXED: Now returns structured errors with field names
             const validationErrors = validateFormData(data, validationRules);
