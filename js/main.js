@@ -176,87 +176,123 @@ function setupFormHandling() {
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
 
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-        try {
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
 
-            // IMPROVED: Enhanced validation that returns structured errors
-            const validationRules = {
-                nombre: { 
-                    required: true, 
-                    minLength: 2,
-                    pattern: /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
-                    message: 'Nombre debe contener solo letras'
-                },
-                email: { 
-                    required: true, 
-                    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: 'Email inválido'
-                },
-                telefono: {
-                    pattern: /^[\d\s\-\+\(\)]+$/,
-                    message: 'Teléfono inválido'
-                },
-                mensaje: { 
-                    required: true, 
-                    minLength: 10,
-                    maxLength: 500,
-                    message: 'Mensaje debe tener entre 10 y 500 caracteres'
-                },
-                servicio: { 
-                    required: true,
-                    message: 'Selecciona un servicio'
-                }
-            };
+    // Mostrar loading
+    submitButton.textContent = 'Enviando...';
+    submitButton.disabled = true;
 
-            // FIXED: Now returns structured errors with field names
-            const validationErrors = validateFormData(data, validationRules);
-
-            if (validationErrors.length > 0) {
-                showNotification(validationErrors[0].message, 'error');
-                highlightErrorFields(validationErrors); // Now works correctly
-                return;
+    try {
+        // Collect form data
+        const data = {};
+        const formElements = this.elements;
+        for (let i = 0; i < formElements.length; i++) {
+            const el = formElements[i];
+            if (el.name) {
+                data[el.name] = el.value;
             }
+        }
 
-            // Clear any previous errors
+        // Define validation rules
+        const validationRules = {
+            nombre: {
+                required: true,
+                minLength: 2,
+                pattern: /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
+                message: 'Nombre debe tener al menos 2 caracteres y solo letras'
+            },
+            email: {
+                required: true,
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Email inválido'
+            },
+            telefono: {
+                required: false,
+                pattern: /^[\d\s\-\+\(\)]+$/,
+                message: 'Teléfono inválido'
+            },
+            mensaje: {
+                required: true,
+                minLength: 10,
+                maxLength: 500,
+                message: 'Mensaje debe tener entre 10 y 500 caracteres'
+            }
+        };
+
+        // FIXED: Now returns structured errors with field names
+        const validationErrors = validateFormData(data, validationRules);
+
+        if (validationErrors.length > 0) {
+            showNotification(validationErrors[0].message, 'error');
+            highlightErrorFields(validationErrors); // Now works correctly
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            return;
+        }
+
+        // Clear any previous errors
+        clearAllFieldErrors();
+
+        // Form submission with better UX
+        const response = await fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: new FormData(this)
+        });
+
+        if (response.ok) {
+            showNotification('¡Mensaje enviado correctamente! Te contactaremos pronto.', 'success');
+            this.reset();
             clearAllFieldErrors();
 
-            // Form submission with better UX
-            const submitButton = this.querySelector('button[type="submit"]');
-            if (submitButton) {
-                const originalText = submitButton.textContent;
-                submitButton.textContent = 'Enviando...';
-                submitButton.disabled = true;
-
-                // Simulate API call
+            // IMPROVED: Better WhatsApp UX - no blocking confirm()
+            if (data.nombre && data.mensaje) {
+                const whatsappMessage = `Hola! Soy ${data.nombre}. ${data.mensaje}`;
                 setTimeout(() => {
-                    showNotification('¡Mensaje enviado correctamente! Te contactaré pronto.', 'success');
-                    this.reset();
-                    clearAllFieldErrors();
-
-                    if (submitButton) {
-                        submitButton.textContent = originalText;
-                        submitButton.disabled = false;
-                    }
-
-                    // IMPROVED: Better WhatsApp UX - no blocking confirm()
-                    if (data.nombre && data.mensaje) {
-                        const whatsappMessage = `Hola! Soy ${data.nombre}. ${data.mensaje}`;
-                        setTimeout(() => {
-                            showWhatsAppOption(whatsappMessage);
-                        }, 2000);
-                    }
+                    showWhatsAppOption(whatsappMessage);
                 }, 2000);
             }
-
-        } catch (error) {
-            console.error('Error processing form:', error);
-            showNotification('Error al procesar el formulario. Por favor, intenta nuevamente.', 'error');
+        } else {
+            throw new Error('Error en el servidor');
         }
+    } catch (error) {
+        console.error('Error processing form:', error);
+        showNotification('Error al procesar el formulario. Por favor, intenta nuevamente.', 'error');
+    } finally {
+        // Restaurar botón
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    }
+
+    // Real-time validation with floating labels
+    const inputs = contactForm.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        // Add floating label functionality - uses CSS classes
+        setupFloatingLabel(input);
+
+        // Real-time validation
+        input.addEventListener('blur', function() {
+            validateField(this);
+        });
+
+        input.addEventListener('focus', function() {
+            clearFieldError(this);
+        });
+
+        input.addEventListener('input', function() {
+            if (this.classList.contains('error')) {
+                clearFieldError(this);
+            }
+        });
     });
+});
+    
 
     // Real-time validation with floating labels
     const inputs = contactForm.querySelectorAll('input, textarea, select');
