@@ -40,21 +40,22 @@ Proyecto web profesional con enfoque en calidad de entrega mediante un flujo de 
 - Documentación del flujo y plantillas: ver `process/README.md`, `process/handoffs/` y `process/prompts/`.
 
 ## Estructura de Carpetas
-├─ README.md # Este documento
-├─ process/ # Manual operativo del flujo
-│ ├─ README.md # Guía de roles, handoffs, gates y checklists
-│ ├─ prompts/ # Prompts oficiales: estratega/planificador/implementador/revisor
-│ ├─ handoffs/ # Plantillas: brief, plan, entrega
-│ └─ checklists/ # Listas de verificación por área
-├─ src/ # Código fuente (HTML/CSS/JS o React)
-│ ├─ README.md # Convenciones de desarrollo
-│ ├─ assets/
-│ │ └─ hero/ # Imágenes optimizadas del hero
-│ ├─ components.css # Estilos de componentes existentes
-│ ├─ pages/ # Páginas adicionales
-│ └─ components/ # Componentes reutilizables
-├─ docs/ # Documentación ampliada (opcional)
-└─ deploy/ # Guías de build/deploy (opcional)
+├─ README.md                     # Este documento
+├─ process/                      # Manual operativo del flujo
+│  ├─ README.md                  # Guía de roles, handoffs, gates y checklists
+│  ├─ prompts/                   # Prompts oficiales: estratega/planificador/implementador/revisor
+│  ├─ handoffs/                  # Plantillas: brief, plan, entrega
+│  └─ checklists/                # Listas de verificación por área
+├─ src/                          # Código fuente (HTML/CSS/JS o React)
+│  ├─ README.md                  # Convenciones de desarrollo
+│  ├─ assets/
+│  │  └─ hero/                   # Imágenes optimizadas del hero
+│  ├─ components.css             # Estilos de componentes existentes
+│  ├─ pages/                     # Páginas adicionales
+│  └─ components/                # Componentes reutilizables
+├─ docs/                         # Documentación ampliada (opcional)
+└─ deploy/                       # Guías de build/deploy (opcional)
+
 
 ## Stack y Herramientas
 - Actual: HTML5, CSS3, JavaScript ES6+, Formspree (formularios).  
@@ -65,7 +66,10 @@ Proyecto web profesional con enfoque en calidad de entrega mediante un flujo de 
 Opción simple (estático):
 Desde la raíz del proyecto
 python -m http.server 3000
-Abrir http://localhost:3000
+
+Abrir en el navegador:
+http://localhost:3000
+
 Si existe tooling con Node:
 Instalar dependencias
 npm install
@@ -74,18 +78,24 @@ npm run dev
 
 ## Validaciones Rápidas
 Recomendado como pre‑entrega del Implementador y paso 1 del Revisor:
-Lint/format
+
+# Lint/format
 npm run lint || true
-Auditoría de dependencias
+
+# Auditoría de dependencias
 npm audit --audit-level=moderate || true
-Escaneo de secretos
+
+# Escaneo de secretos
 git-secrets --scan || true
-Accesibilidad y performance (en servidor local)
+
+# Accesibilidad y performance (con servidor local corriendo)
 lighthouse --chrome-flags="--headless" http://localhost:3000 || true
-Validación HTML/CSS/JS (si hay scripts)
+
+# Validación HTML/CSS/JS (si hay scripts definidos)
 npm run validate:html || true
 npm run validate:css || true
 npm run lint:js || true
+
 
 ## Estándares Mínimos
 - Accesibilidad (WCAG 2.1 AA):  
