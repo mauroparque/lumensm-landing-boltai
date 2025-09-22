@@ -1,6 +1,5 @@
 // ================================
-// LUMEN SALUD MENTAL - JAVASCRIPT FINAL
-// Versión mejorada con correcciones técnicas y mejores prácticas
+// LUMEN SALUD MENTAL - JAVASCRIPT CORREGIDO
 // ================================
 
 // Utility Functions
@@ -51,7 +50,7 @@ const handleScroll = debounce(() => {
             navbar.classList.remove('scrolled');
         }
     }
-
+    
     // Show/hide scroll to top button
     const scrollToTopBtn = document.querySelector('.scroll-to-top');
     if (scrollToTopBtn) {
@@ -61,7 +60,7 @@ const handleScroll = debounce(() => {
             scrollToTopBtn.classList.remove('visible');
         }
     }
-}, 16); // 60fps optimized
+}, 16);
 
 // Single scroll event listener with passive option for better performance
 window.addEventListener('scroll', handleScroll, { passive: true });
@@ -72,7 +71,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            const offsetTop = target.offsetTop - 70; // Account for navbar height
+            const offsetTop = target.offsetTop - 70;
             window.scrollTo({
                 top: offsetTop,
                 behavior: 'smooth'
@@ -81,43 +80,40 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Scroll to top functionality - NO inline styles (moved to CSS)
+// Scroll to top functionality
 function createScrollToTopButton() {
-    // Check if button already exists
     if (document.querySelector('.scroll-to-top')) return;
-
+    
     const scrollToTopBtn = document.createElement('button');
     scrollToTopBtn.className = 'scroll-to-top';
     scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
     scrollToTopBtn.setAttribute('aria-label', 'Volver arriba');
-
+    
     scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     });
-
+    
     document.body.appendChild(scrollToTopBtn);
 }
 
-// Enhanced Intersection Observer for animations - Uses CSS classes only
+// Enhanced Intersection Observer for animations
 function createObserver() {
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-
+    
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Use CSS class approach for flexibility - classes defined in CSS file
                 entry.target.classList.add('fade-in-up');
             }
         });
     }, observerOptions);
 
-    // Observe elements that should animate on scroll
     document.querySelectorAll('.service-card, .blog-card, .testimonial-card, .about-text, .contact-info').forEach(element => {
         if (element) {
             observer.observe(element);
@@ -125,7 +121,7 @@ function createObserver() {
     });
 }
 
-// Lazy loading for images - NO inline styles (moved to CSS)
+// Lazy loading for images
 function setupLazyLoading() {
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -142,7 +138,6 @@ function setupLazyLoading() {
             });
         });
 
-        // Find all images with data-src attribute
         document.querySelectorAll('img[data-src]').forEach(img => {
             img.classList.add('lazy');
             imageObserver.observe(img);
@@ -154,85 +149,40 @@ function setupLazyLoading() {
 function setupImageErrorHandling() {
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('error', function() {
-            // Hide failed image
             this.style.display = 'none';
-
-            // Create placeholder with CSS classes
             const placeholder = document.createElement('div');
             placeholder.className = 'img-placeholder';
             placeholder.textContent = 'Imagen no disponible';
-
             if (this.parentNode) {
                 this.parentNode.insertBefore(placeholder, this);
             }
-
             console.warn('Failed to load image:', this.src);
         });
     });
 }
 
-// Enhanced form handling with IMPROVED validation structure
+// ===== FORMULARIO CORREGIDO - SOLO UNA VERSIÓN =====
 function setupFormHandling() {
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
 
-contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const submitButton = this.querySelector('button[type="submit"]');
-    const originalText = submitButton.textContent;
-    
-    // Mostrar loading
-    submitButton.textContent = 'Enviando...';
-    submitButton.disabled = true;
-    
-    try {
-        const response = await fetch(this.action, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body: new FormData(this)
-        });
+    // ÚNICO addEventListener para submit con Formspree
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        if (response.ok) {
-            // Éxito
-            showNotification('¡Mensaje enviado correctamente! Te contactaré pronto.', 'success');
-            this.reset();
-            clearFormErrors();
-        } else {
-            // Error del servidor
-            throw new Error('Error en el servidor');
-        }
-    } catch (error) {
-        // Error de red o otro
-        showNotification('Error al enviar el mensaje. Por favor, intenta nuevamente.', 'error');
-        console.error('Error:', error);
-    } finally {
-        // Restaurar botón
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-    }
-});
-
-    try {
-        // Collect form data
-        const data = {};
-        const formElements = this.elements;
-        for (let i = 0; i < formElements.length; i++) {
-            const el = formElements[i];
-            if (el.name) {
-                data[el.name] = el.value;
-            }
-        }
-
-        // Define validation rules
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        
+        // Validación antes del envío
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        
         const validationRules = {
             nombre: {
                 required: true,
                 minLength: 2,
                 pattern: /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$/,
-                message: 'Nombre debe tener al menos 2 caracteres y solo letras'
+                message: 'Nombre debe contener solo letras'
             },
             email: {
                 required: true,
@@ -240,7 +190,6 @@ contactForm.addEventListener('submit', async function(e) {
                 message: 'Email inválido'
             },
             telefono: {
-                required: false,
                 pattern: /^[\d\s\-\+\(\)]+$/,
                 message: 'Teléfono inválido'
             },
@@ -249,95 +198,72 @@ contactForm.addEventListener('submit', async function(e) {
                 minLength: 10,
                 maxLength: 500,
                 message: 'Mensaje debe tener entre 10 y 500 caracteres'
+            },
+            servicio: {
+                required: true,
+                message: 'Selecciona un servicio'
             }
         };
 
-        // FIXED: Now returns structured errors with field names
         const validationErrors = validateFormData(data, validationRules);
-
         if (validationErrors.length > 0) {
             showNotification(validationErrors[0].message, 'error');
-            highlightErrorFields(validationErrors); // Now works correctly
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
+            highlightErrorFields(validationErrors);
             return;
         }
 
-        // Clear any previous errors
         clearAllFieldErrors();
 
-        // Form submission with better UX
-        const response = await fetch(this.action, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body: new FormData(this)
-        });
-
-        if (response.ok) {
-            showNotification('¡Mensaje enviado correctamente! Te contactaremos pronto.', 'success');
-            this.reset();
-            clearAllFieldErrors();
-
-            // IMPROVED: Better WhatsApp UX - no blocking confirm()
-            if (data.nombre && data.mensaje) {
-                const whatsappMessage = `Hola! Soy ${data.nombre}. ${data.mensaje}`;
-                setTimeout(() => {
-                    showWhatsAppOption(whatsappMessage);
-                }, 2000);
+        // Mostrar loading
+        submitButton.textContent = 'Enviando...';
+        submitButton.disabled = true;
+        
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+            
+            if (response.ok) {
+                showNotification('¡Mensaje enviado correctamente! Te contactaré pronto.', 'success');
+                this.reset();
+                clearAllFieldErrors();
+                
+                // Opción WhatsApp después del éxito
+                if (data.nombre && data.mensaje) {
+                    const whatsappMessage = `Hola! Soy ${data.nombre}. ${data.mensaje}`;
+                    setTimeout(() => {
+                        showWhatsAppOption(whatsappMessage);
+                    }, 2000);
+                }
+            } else {
+                throw new Error('Error en el servidor');
             }
-        } else {
-            throw new Error('Error en el servidor');
+        } catch (error) {
+            showNotification('Error al enviar el mensaje. Por favor, intenta nuevamente.', 'error');
+            console.error('Error:', error);
+        } finally {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
         }
-    } catch (error) {
-        console.error('Error processing form:', error);
-        showNotification('Error al procesar el formulario. Por favor, intenta nuevamente.', 'error');
-    } finally {
-        // Restaurar botón
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-    }
-
-    // Real-time validation with floating labels
-    const inputs = contactForm.querySelectorAll('input, textarea, select');
-    inputs.forEach(input => {
-        // Add floating label functionality - uses CSS classes
-        setupFloatingLabel(input);
-
-        // Real-time validation
-        input.addEventListener('blur', function() {
-            validateField(this);
-        });
-
-        input.addEventListener('focus', function() {
-            clearFieldError(this);
-        });
-
-        input.addEventListener('input', function() {
-            if (this.classList.contains('error')) {
-                clearFieldError(this);
-            }
-        });
     });
-});
     
-
-    // Real-time validation with floating labels
+    // Real-time validation setup
     const inputs = contactForm.querySelectorAll('input, textarea, select');
     inputs.forEach(input => {
-        // Add floating label functionality - uses CSS classes
         setupFloatingLabel(input);
-
-        // Real-time validation
+        
         input.addEventListener('blur', function() {
             validateField(this);
         });
-
+        
         input.addEventListener('focus', function() {
             clearFieldError(this);
         });
-
+        
         input.addEventListener('input', function() {
             if (this.classList.contains('error')) {
                 clearFieldError(this);
@@ -346,13 +272,13 @@ contactForm.addEventListener('submit', async function(e) {
     });
 }
 
-// IMPROVED: Floating labels functionality - NO inline styles
+// Floating labels functionality
 function setupFloatingLabel(input) {
     const wrapper = input.closest('.form-group');
     if (!wrapper) return;
-
+    
     const label = wrapper.querySelector('label') || createFloatingLabel(input, wrapper);
-
+    
     function updateLabel() {
         if (input.value.trim() !== '' || input === document.activeElement) {
             label.classList.add('active');
@@ -360,12 +286,10 @@ function setupFloatingLabel(input) {
             label.classList.remove('active');
         }
     }
-
+    
     input.addEventListener('focus', updateLabel);
     input.addEventListener('blur', updateLabel);
     input.addEventListener('input', updateLabel);
-
-    // Initial state
     updateLabel();
 }
 
@@ -373,19 +297,17 @@ function createFloatingLabel(input, wrapper) {
     const label = document.createElement('label');
     label.textContent = input.placeholder || input.name;
     label.setAttribute('for', input.id);
-    label.className = 'floating-label'; // CSS class defined in external file
-
+    label.className = 'floating-label';
     wrapper.appendChild(label);
     return label;
 }
 
-// FIXED: Advanced form validation - returns structured errors
+// Advanced form validation
 function validateFormData(data, rules) {
     const errors = [];
-
     for (const [field, fieldRules] of Object.entries(rules)) {
         const value = data[field]?.trim() || '';
-
+        
         if (fieldRules.required && !value) {
             errors.push({
                 field: field,
@@ -393,7 +315,7 @@ function validateFormData(data, rules) {
             });
             continue;
         }
-
+        
         if (value) {
             if (fieldRules.minLength && value.length < fieldRules.minLength) {
                 errors.push({
@@ -401,14 +323,12 @@ function validateFormData(data, rules) {
                     message: fieldRules.message || `${field} muy corto`
                 });
             }
-
             if (fieldRules.maxLength && value.length > fieldRules.maxLength) {
                 errors.push({
                     field: field,
                     message: fieldRules.message || `${field} muy largo`
                 });
             }
-
             if (fieldRules.pattern && !fieldRules.pattern.test(value)) {
                 errors.push({
                     field: field,
@@ -417,19 +337,16 @@ function validateFormData(data, rules) {
             }
         }
     }
-
     return errors;
 }
 
 function validateField(field) {
     const value = field.value.trim();
     const fieldName = field.name;
-
+    
     clearFieldError(field);
-
-    // Field-specific validation - returns structured errors
+    
     let error = null;
-
     switch(fieldName) {
         case 'nombre':
             if (!value || value.length < 2) {
@@ -438,22 +355,18 @@ function validateField(field) {
                 error = { field: fieldName, message: 'Nombre solo puede contener letras' };
             }
             break;
-
         case 'email':
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!value) {
                 error = { field: fieldName, message: 'Email es requerido' };
-            } else if (!emailRegex.test(value)) {
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                 error = { field: fieldName, message: 'Email inválido' };
             }
             break;
-
         case 'telefono':
             if (value && !/^[\d\s\-\+\(\)]+$/.test(value)) {
                 error = { field: fieldName, message: 'Teléfono inválido' };
             }
             break;
-
         case 'mensaje':
             if (!value || value.length < 10) {
                 error = { field: fieldName, message: 'Mensaje debe tener al menos 10 caracteres' };
@@ -462,7 +375,7 @@ function validateField(field) {
             }
             break;
     }
-
+    
     if (error) {
         showFieldError(field, error.message);
     }
@@ -470,15 +383,14 @@ function validateField(field) {
 
 function showFieldError(field, message) {
     field.classList.add('error');
-
-    // Remove existing error message
+    
     const existingError = field.parentNode.querySelector('.field-error');
     if (existingError) {
         existingError.remove();
     }
-
+    
     const errorElement = document.createElement('span');
-    errorElement.className = 'field-error'; // CSS class defined in external file
+    errorElement.className = 'field-error';
     errorElement.textContent = message;
     field.parentNode.appendChild(errorElement);
 }
@@ -500,7 +412,6 @@ function clearAllFieldErrors() {
     });
 }
 
-// FIXED: Now correctly highlights fields using structured error objects
 function highlightErrorFields(errors) {
     errors.forEach(error => {
         const field = document.querySelector(`[name="${error.field}"]`);
@@ -513,13 +424,12 @@ function highlightErrorFields(errors) {
 
 // WhatsApp Integration
 function openWhatsApp(message = '') {
-    const phoneNumber = '543547340673'; // Your WhatsApp number
+    const phoneNumber = '543547340673';
     const encodedMessage = encodeURIComponent(message || 'Hola! Me interesa obtener más información sobre los servicios de Lumen Salud Mental.');
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappURL, '_blank', 'noopener');
 }
 
-// IMPROVED: Better UX WhatsApp option - NO blocking confirm()
 function showWhatsAppOption(message) {
     showNotification(
         'Mensaje enviado correctamente. ¿También quieres enviarlo por WhatsApp?',
@@ -529,14 +439,12 @@ function showWhatsAppOption(message) {
                 text: 'Enviar por WhatsApp',
                 callback: () => openWhatsApp(message)
             },
-            duration: 8000 // Longer duration for action button
+            duration: 8000
         }
     );
 }
 
-// Setup WhatsApp buttons
 function setupWhatsAppIntegration() {
-    // WhatsApp float button
     const whatsappFloat = document.querySelector('.whatsapp-float');
     if (whatsappFloat) {
         whatsappFloat.addEventListener('click', (e) => {
@@ -544,8 +452,7 @@ function setupWhatsAppIntegration() {
             openWhatsApp();
         });
     }
-
-    // Other WhatsApp buttons
+    
     document.querySelectorAll('[href*="wa.me"], .whatsapp-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -555,37 +462,33 @@ function setupWhatsAppIntegration() {
     });
 }
 
-// IMPROVED: Enhanced notification system - NO inline styles
+// Enhanced notification system
 function showNotification(message, type = 'info', options = {}) {
-    // Remove existing notifications
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(notification => notification.remove());
-
-    // Create notification
+    
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
-
+    
     let notificationHTML = `
         <span class="notification-message">${message}</span>
     `;
-
-    // Add action button if provided
+    
     if (options.action) {
         notificationHTML += `
             <button class="notification-action" data-action="true">${options.action.text}</button>
         `;
     }
-
+    
     notificationHTML += `
         <button class="notification-close" aria-label="Cerrar notificación">&times;</button>
     `;
-
+    
     notification.innerHTML = notificationHTML;
-
-    // Event listeners
+    
     const closeBtn = notification.querySelector('.notification-close');
     closeBtn.addEventListener('click', () => notification.remove());
-
+    
     const actionBtn = notification.querySelector('.notification-action');
     if (actionBtn && options.action?.callback) {
         actionBtn.addEventListener('click', () => {
@@ -593,10 +496,9 @@ function showNotification(message, type = 'info', options = {}) {
             notification.remove();
         });
     }
-
+    
     document.body.appendChild(notification);
-
-    // Auto-remove after specified duration
+    
     const duration = options.duration || 5000;
     setTimeout(() => {
         if (notification.parentNode) {
@@ -606,17 +508,14 @@ function showNotification(message, type = 'info', options = {}) {
     }, duration);
 }
 
-// Skip link for accessibility - NO inline styles (moved to CSS)
 function createSkipLink() {
     const skipLink = document.createElement('a');
     skipLink.href = '#main-content';
-    skipLink.className = 'skip-link'; // CSS class defined in external file
+    skipLink.className = 'skip-link';
     skipLink.textContent = 'Saltar al contenido principal';
-
     document.body.insertBefore(skipLink, document.body.firstChild);
 }
 
-// Console welcome message
 function showWelcomeMessage() {
     const styles = [
         'color: #178E79',
@@ -624,12 +523,11 @@ function showWelcomeMessage() {
         'font-weight: bold',
         'text-shadow: 2px 2px 4px rgba(0,0,0,0.1)'
     ].join(';');
-
+    
     console.log('%c🌟 Lumen Salud Mental', styles);
     console.log('%cSitio web desarrollado con atención al detalle para ofrecer la mejor experiencia.', 'color: #6b7280; font-size: 14px;');
     console.log('%c💡 ¿Necesitas ayuda técnica? Contacta al desarrollador.', 'color: #3b82f6; font-size: 12px;');
-
-    // Performance info
+    
     if ('performance' in window) {
         console.log(`%c⚡ Página cargada en ${Math.round(performance.now())} ms`, 'color: #10b981; font-size: 12px;');
     }
@@ -638,9 +536,8 @@ function showWelcomeMessage() {
 // Main initialization function
 function initializePage() {
     console.log('🚀 Inicializando Lumen Salud Mental...');
-
+    
     try {
-        // Core functionality
         createObserver();
         setupLazyLoading();
         setupImageErrorHandling();
@@ -648,25 +545,21 @@ function initializePage() {
         setupWhatsAppIntegration();
         createScrollToTopButton();
         createSkipLink();
-
-        // Show welcome message
         showWelcomeMessage();
-
+        
         console.log('✅ Página inicializada correctamente');
-
-        // Track initialization time
+        
         if ('performance' in window) {
             const initTime = performance.now();
             console.log(`📊 Inicialización completada en ${Math.round(initTime)} ms`);
         }
-
     } catch (error) {
         console.error('❌ Error durante la inicialización:', error);
         showNotification('Error al cargar algunas funcionalidades del sitio', 'error');
     }
 }
 
-// DOM Content Loaded - Single entry point
+// DOM Content Loaded
 document.addEventListener('DOMContentLoaded', initializePage);
 
 // Performance tracking
@@ -677,15 +570,14 @@ window.addEventListener('load', () => {
     }
 });
 
-// Error handling for uncaught errors
+// Error handling
 window.addEventListener('error', (event) => {
     console.error('Error no manejado:', event.error);
 });
 
-// Service Worker registration placeholder
+// Service Worker placeholder
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         // Ready for PWA implementation
-        // navigator.serviceWorker.register('/sw.js');
     });
 }
