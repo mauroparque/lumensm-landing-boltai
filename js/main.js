@@ -178,13 +178,42 @@ function setupFormHandling() {
 
 contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
-
+    
     const submitButton = this.querySelector('button[type="submit"]');
     const originalText = submitButton.textContent;
-
+    
     // Mostrar loading
     submitButton.textContent = 'Enviando...';
     submitButton.disabled = true;
+    
+    try {
+        const response = await fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: new FormData(this)
+        });
+        
+        if (response.ok) {
+            // Éxito
+            showNotification('¡Mensaje enviado correctamente! Te contactaré pronto.', 'success');
+            this.reset();
+            clearFormErrors();
+        } else {
+            // Error del servidor
+            throw new Error('Error en el servidor');
+        }
+    } catch (error) {
+        // Error de red o otro
+        showNotification('Error al enviar el mensaje. Por favor, intenta nuevamente.', 'error');
+        console.error('Error:', error);
+    } finally {
+        // Restaurar botón
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    }
+});
 
     try {
         // Collect form data
