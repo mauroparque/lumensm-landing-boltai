@@ -79,19 +79,19 @@ npm run dev
 ## Validaciones Rápidas
 Recomendado como pre‑entrega del Implementador y paso 1 del Revisor:
 
-# Lint/format
+### Lint/format
 npm run lint || true
 
-# Auditoría de dependencias
+### Auditoría de dependencias
 npm audit --audit-level=moderate || true
 
-# Escaneo de secretos
+### Escaneo de secretos
 git-secrets --scan || true
 
-# Accesibilidad y performance (con servidor local corriendo)
+### Accesibilidad y performance (con servidor local corriendo)
 lighthouse --chrome-flags="--headless" http://localhost:3000 || true
 
-# Validación HTML/CSS/JS (si hay scripts definidos)
+### Validación HTML/CSS/JS (si hay scripts definidos)
 npm run validate:html || true
 npm run validate:css || true
 npm run lint:js || true
@@ -125,13 +125,13 @@ Detalles extendidos en `process/checklists/`.
 ## Uso en Hilos/Agentes IA
 Pegar este bloque al inicio de cada hilo del agente correspondiente:
 
-PROYECTO: Web Profesional (flujo multi‑agente)
-STACK: HTML/CSS/JS → Migración a React + Vite + TailwindCSS
-ESTÁNDARES: WCAG 2.1 AA, Performance ≥ 90, Seguridad baseline (OWASP ASVS L1)
-ROL: [Estratega | Planificador | Implementador | Revisor]
-TAREA: [ID y título de la feature]
-HANDOFF: [Enlace a brief/plan/entrega según etapa]
-REQUISITOS EXTRA: Enfoque en no introducir fallas de seguridad; evidencias de validación.
+* PROYECTO: Web Profesional (flujo multi‑agente)
+* STACK: HTML/CSS/JS → Migración a React + Vite + TailwindCSS
+* ESTÁNDARES: WCAG 2.1 AA, Performance ≥ 90, Seguridad baseline (OWASP ASVS L1)
+* ROL: [Estratega | Planificador | Implementador | Revisor]
+* TAREA: [ID y título de la feature]
+* HANDOFF: [Enlace a brief/plan/entrega según etapa]
+* REQUISITOS EXTRA: Enfoque en no introducir fallas de seguridad; evidencias de validación.
 
 Guías y plantillas: ver `process/README.md`, `process/handoffs/` y `process/prompts/`.
 
