@@ -618,7 +618,15 @@ function initializeProcessCarousel() {
             const viewportCenter = viewport.clientWidth / 2;
             slidePositions = slides.map((slide, index) => {
                 const slideCenter = (slide.offsetLeft - track.offsetLeft) + (slide.offsetWidth / 2);
-                return slideCenter - viewportCenter;
+                const targetPosition = slideCenter - viewportCenter;
+                
+                // Ensure the last slide doesn't go too far right
+                if (index === slides.length - 1) {
+                    const maxScroll = track.scrollWidth - viewport.clientWidth;
+                    return Math.min(targetPosition, maxScroll);
+                }
+                
+                return Math.max(0, targetPosition);
             });
         };
 
@@ -655,7 +663,7 @@ function initializeProcessCarousel() {
             }
 
             viewport.scrollTo({
-                left: position,
+                left: Math.max(0, position),
                 behavior: animate ? 'smooth' : 'auto'
             });
 
@@ -718,8 +726,8 @@ function initializeProcessCarousel() {
         const syncSlideFromScroll = debounce(() => {
             if (isAutoScrolling) return;
             const currentScroll = viewport.scrollLeft;
-            let nearestIndex = currentIndex;
-            let nearestDistance = Math.abs(currentScroll - (slidePositions[currentIndex] || 0));
+            let nearestIndex = 0;
+            let nearestDistance = Infinity;
 
             slidePositions.forEach((position, index) => {
                 const distance = Math.abs(currentScroll - position);
@@ -733,7 +741,7 @@ function initializeProcessCarousel() {
                 currentIndex = nearestIndex;
                 setActiveState(currentIndex);
             }
-        }, 120);
+        }, 80);
 
         const handleResize = debounce(() => {
             computePositions();
