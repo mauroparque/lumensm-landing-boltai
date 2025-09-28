@@ -50,7 +50,7 @@ const handleScroll = debounce(() => {
             navbar.classList.remove('scrolled');
         }
     }
-    
+
     // Show/hide scroll to top button
     const scrollToTopBtn = document.querySelector('.scroll-to-top');
     if (scrollToTopBtn) {
@@ -562,7 +562,70 @@ function initializePage() {
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', initializePage);
 
-// Performance tracking
+// FAQ Toggle Function (Global scope for inline onclick)
+window.toggleFaq = function(button) {
+    const faqItem = button.parentElement;
+    const faqAnswer = faqItem.querySelector('.faq-answer');
+    const isActive = faqItem.classList.contains('active');
+
+    // Close all other FAQ items
+    document.querySelectorAll('.faq-item.active').forEach(item => {
+        if (item !== faqItem) {
+            item.classList.remove('active');
+            const otherAnswer = item.querySelector('.faq-answer');
+            if (otherAnswer) {
+                otherAnswer.classList.remove('active');
+            }
+        }
+    });
+
+    // Toggle current FAQ item
+    if (isActive) {
+        faqItem.classList.remove('active');
+        faqAnswer.classList.remove('active');
+    } else {
+        faqItem.classList.add('active');
+        faqAnswer.classList.add('active');
+    }
+};
+
+// Initialize FAQ functionality
+function initializeFAQ() {
+    const faqButtons = document.querySelectorAll('.faq-question');
+    faqButtons.forEach(button => {
+        button.addEventListener('click', () => toggleFaq(button));
+        
+        // Add keyboard support
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleFaq(button);
+            }
+        });
+    });
+}
+
+// Add FAQ initialization to the main init function
+function initializePage() {
+    try {
+        console.log('🚀 Inicializando Lumen Salud Mental...');
+        
+        initializeScrollEffects();
+        initializeAnimations();
+        initializeFormValidation();
+        initializeFAQ(); // Add FAQ initialization
+        
+        console.log('✅ Página inicializada correctamente');
+        
+        if ('performance' in window) {
+            const initTime = performance.now();
+            console.log(`📊 Inicialización completada en ${Math.round(initTime)} ms`);
+        }
+    } catch (error) {
+        console.error('❌ Error durante la inicialización:', error);
+        showNotification('Error al cargar algunas funcionalidades del sitio', 'error');
+    }
+}
 window.addEventListener('load', () => {
     if ('performance' in window) {
         const loadTime = performance.now();
