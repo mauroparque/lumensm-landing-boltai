@@ -183,6 +183,24 @@ p {
     width: 100%;
 }
 
+/* Improved keyboard focus styles for navigation links
+   - Use :focus-visible so keyboard users get a clear, visible indicator
+   - Use box-shadow + slight background highlight for better contrast
+   - Remove outline on mouse focus to avoid the 'stuck box' effect
+*/
+.nav-link:focus-visible {
+    color: var(--primary-color);
+    background-color: rgba(23, 142, 121, 0.06); /* subtle highlight */
+    border-radius: 6px;
+    padding: 4px 6px;
+    box-shadow: 0 0 0 3px rgba(23,142,121,0.12);
+    outline: none; /* visual handled by box-shadow */
+}
+
+.nav-link:focus:not(:focus-visible) {
+    outline: none;
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
@@ -555,6 +573,25 @@ p {
     background-color: var(--white);
 }
 
+/* Evita cursiva por defecto en <address> */
+address, address * {
+    font-style: normal;
+}
+
+/* Enlaces de teléfono y mail en contacto */
+.contact-item a[href^="tel"],
+.contact-item a[href^="mailto"] {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.contact-item a[href^="tel"]:hover,
+.contact-item a[href^="mailto"]:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
 .contact-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -685,6 +722,20 @@ p {
 
 .footer-section ul li a:hover {
     color: var(--white);
+}
+
+/* Enlaces de teléfono y mail en footer (contacto rápido) */
+.footer-section a[href^="tel"],
+.footer-section a[href^="mailto"] {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.footer-section a[href^="tel"]:hover,
+.footer-section a[href^="mailto"]:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
 }
 
 .social-links {
@@ -977,14 +1028,27 @@ p {
     }
 }
 
-/* Focus styles for accessibility */
-button:focus,
-input:focus,
-textarea:focus,
-select:focus,
-a:focus {
+/* Focus styles for accessibility
+   Use :focus-visible so the focus ring appears for keyboard users (accessibility)
+   but not for mouse clicks — prevents a persistent 'boxed' look on clicked items.
+   Fallback: where :focus-visible isn't supported, browsers typically treat it like :focus.
+*/
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
+}
+
+/* Hide outline when element is focused by mouse (not keyboard) */
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+    outline: none;
 }
 
 /* High contrast mode support */
