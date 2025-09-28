@@ -605,7 +605,7 @@ function initializeProcessCarousel() {
         viewport.setAttribute('role', 'region');
         viewport.setAttribute('aria-live', 'polite');
 
-        let slidePositions = [];
+    let slidePositions = [];
         let currentIndex = 0;
         let autoplayTimer = null;
         let resumeTimer = null;
@@ -615,7 +615,11 @@ function initializeProcessCarousel() {
         const shouldAutoplay = autoplayAttr !== 'false' && slides.length > 1 && !prefersReducedMotion;
 
         const computePositions = () => {
-            slidePositions = slides.map(slide => slide.offsetLeft - track.offsetLeft);
+            const viewportCenter = viewport.clientWidth / 2;
+            slidePositions = slides.map((slide, index) => {
+                const slideCenter = (slide.offsetLeft - track.offsetLeft) + (slide.offsetWidth / 2);
+                return slideCenter - viewportCenter;
+            });
         };
 
         const setActiveState = index => {
@@ -738,10 +742,18 @@ function initializeProcessCarousel() {
 
         if (prevBtn) {
             prevBtn.addEventListener('click', handlePrev);
+            prevBtn.addEventListener('touchstart', (event) => {
+                event.preventDefault();
+                handlePrev();
+            }, { passive: false });
         }
 
         if (nextBtn) {
             nextBtn.addEventListener('click', handleNext);
+            nextBtn.addEventListener('touchstart', (event) => {
+                event.preventDefault();
+                handleNext();
+            }, { passive: false });
         }
 
         dots.forEach((dot, index) => {
