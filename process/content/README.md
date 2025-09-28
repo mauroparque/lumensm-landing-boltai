@@ -35,10 +35,8 @@ Implementar un flujo de creación y revisión de contenido web con cuatro agente
 
 ## Estructura de archivos del Space
 - /style/ Brand_Guide.md, Glossary.md, WCAG_Checklist.md  
-- /brief/ A1_Brief_YYYY‑MM‑DD.md  
-- /drafts/ A2_Draft_YYYY‑MM‑DD.md  
-- /seo/ A3_SEO_Version_YYYY‑MM‑DD.md, A3_SEO_Diff_YYYY‑MM‑DD.md, A3_SEO_Checklist.md  
-- /qa/ A4_QA_REPORT_YYYY‑MM‑DD.md, Lighthouse_Reporte_YYYY‑MM‑DD.html, Axe_Reporte_YYYY‑MM‑DD.json
+- /templates/ brief_template.md, draft_template.md, qa_report_template.md    
+- /seo/ SEO_Checklist.md
 
 ## Modelos (sugerencia)
 - A1 y A3: modelo con razonamiento extendido para entrevistas, síntesis compleja e investigación.  
@@ -67,7 +65,7 @@ Implementar un flujo de creación y revisión de contenido web con cuatro agente
 - Contraste declarado y lenguaje claro.  
 - Indicaciones de cuándo requerir auditoría externa y cómo adjuntar la evidencia.
 
-## brief/BRIEF_TEMPLATE.md
+## templates/BRIEF_TEMPLATE.md
 Título:  
 Fecha:  
 Propósito de la página:  
@@ -82,7 +80,7 @@ Keywords orientativas (con intención):
 Criterios de aceptación para A2:  
 Resumen para traspaso (para A2):
 
-## drafts/DRAFT_TEMPLATE.md
+## templates/DRAFT_TEMPLATE.md
 Título interno:  
 Fecha:  
 Meta title (aprox. 50–60 visibles):  
@@ -106,7 +104,7 @@ Resumen para traspaso (para A3):
 - Evidencias de SERP: breve resumen de hallazgos y racional de cambios.  
 - Resumen para traspaso (para A4).
 
-## qa/QA_REPORT_TEMPLATE.md
+## templates/QA_REPORT_TEMPLATE.md
 Documento:  
 Fecha:  
 Revisor:  
