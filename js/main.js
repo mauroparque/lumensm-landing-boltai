@@ -546,6 +546,7 @@ function initializePage() {
         createScrollToTopButton();
         createSkipLink();
         showWelcomeMessage();
+        initializeFAQ(); // Add FAQ initialization
         
         console.log('✅ Página inicializada correctamente');
         
@@ -605,27 +606,7 @@ function initializeFAQ() {
     });
 }
 
-// Add FAQ initialization to the main init function
-function initializePage() {
-    try {
-        console.log('🚀 Inicializando Lumen Salud Mental...');
-        
-        initializeScrollEffects();
-        initializeAnimations();
-        initializeFormValidation();
-        initializeFAQ(); // Add FAQ initialization
-        
-        console.log('✅ Página inicializada correctamente');
-        
-        if ('performance' in window) {
-            const initTime = performance.now();
-            console.log(`📊 Inicialización completada en ${Math.round(initTime)} ms`);
-        }
-    } catch (error) {
-        console.error('❌ Error durante la inicialización:', error);
-        showNotification('Error al cargar algunas funcionalidades del sitio', 'error');
-    }
-}
+// Performance tracking
 window.addEventListener('load', () => {
     if ('performance' in window) {
         const loadTime = performance.now();
