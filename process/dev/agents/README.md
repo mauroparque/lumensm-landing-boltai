@@ -112,4 +112,3 @@ ESTÁNDARES: WCAG 2.1 AA, Lighthouse ≥ 90, Seguridad baseline (OWASP ASVS L1)
 REQUISITOS: No introducir fallas de seguridad; evidencias de validación.
 [Pegá aquí el Plan aprobado]
 [Pegá aquí los diffs por archivo + evidencias de validación]
-
