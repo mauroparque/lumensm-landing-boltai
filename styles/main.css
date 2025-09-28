@@ -1107,11 +1107,34 @@ a:focus:not(:focus-visible) {
     max-width: 100%;
 }
 
+.process-carousel {
+    position: relative !important;
+    width: 100% !important;
+    margin: 0 auto 2rem !important;
+}
+
+.process-window {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    width: 100% !important;
+    position: relative !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+}
+
+.process-window::-webkit-scrollbar {
+    display: none !important;
+}
+
 .process-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
-    margin-bottom: 2rem !important;
+    display: flex !important;
+    align-items: stretch !important;
+    gap: 1.25rem !important;
+    margin: 0 !important;
+    padding: 0.5rem 0 1.5rem !important;
+    transition: transform 0.6s ease !important;
 }
 
 .process-card {
@@ -1120,9 +1143,106 @@ a:focus:not(:focus-visible) {
     border-radius: var(--border-radius) !important;
     box-shadow: var(--shadow-sm) !important;
     border: 2px solid var(--gray-200) !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0 !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    position: relative !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+    flex: 0 0 100% !important;
+    scroll-snap-align: center !important;
+}
+
+.process-card::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: radial-gradient(circle at top, rgba(23, 142, 121, 0.12), transparent 58%) !important;
+    opacity: 0 !important;
+    transition: opacity 0.25s ease !important;
+    pointer-events: none !important;
+}
+
+.process-card.is-active {
+    box-shadow: var(--shadow-lg) !important;
+    border-color: var(--primary-color) !important;
+    transform: translateY(-6px) !important;
+}
+
+@media (pointer: coarse) {
+    .process-card:active,
+    .process-card:focus-visible {
+        transform: translateY(-2px) scale(0.995) !important;
+        box-shadow: var(--shadow-lg) !important;
+        border-color: var(--primary-color) !important;
+    }
+    
+    .process-card:active::after,
+    .process-card:focus-visible::after {
+        opacity: 1 !important;
+    }
+}
+
+.process-controls {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+    margin-top: 0.5rem !important;
+}
+
+.process-nav {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--gray-200) !important;
+    background-color: var(--white) !important;
+    color: var(--primary-color) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: var(--shadow-sm) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.process-nav:hover,
+.process-nav:focus-visible {
+    border-color: var(--primary-color) !important;
+    box-shadow: var(--shadow-md) !important;
+    transform: translateY(-2px) !important;
+}
+
+.process-nav:disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.process-dots {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+.process-dot {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    border: none !important;
+    background-color: var(--gray-300) !important;
+    cursor: pointer !important;
+    transition: transform 0.25s ease, background-color 0.25s ease !important;
+    padding: 0 !important;
+}
+
+.process-dot.is-active {
+    background-color: var(--primary-color) !important;
+    transform: scale(1.2) !important;
+}
+
+.process-dot:focus-visible {
+    outline: 2px solid var(--primary-color) !important;
+    outline-offset: 2px !important;
 }
 
 .process-icon {
@@ -1314,10 +1434,21 @@ a:focus:not(:focus-visible) {
     .how-it-works {
         padding: 100px 0 !important;
     }
-    
+    .process-window {
+        max-width: 960px !important;
+        margin: 0 auto !important;
+    }
+
     .process-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
+        justify-content: center !important;
         gap: 2rem !important;
+        padding: 1rem 0 2rem !important;
+        flex-wrap: nowrap !important;
+    }
+    
+    .process-card {
+        flex: 0 0 360px !important;
+        max-width: 360px !important;
     }
     
     .microcopy-badges {
@@ -1336,6 +1467,20 @@ a:focus:not(:focus-visible) {
     
     .faq-container {
         max-width: 800px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .process-card {
+        flex: 0 0 400px !important;
+        max-width: 400px !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    .process-card {
+        flex: 0 0 420px !important;
+        max-width: 420px !important;
     }
 }
 

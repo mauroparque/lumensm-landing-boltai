@@ -546,6 +546,7 @@ function initializePage() {
         createScrollToTopButton();
         createSkipLink();
         showWelcomeMessage();
+        initializeProcessCarousel();
         
         // Add a small delay to ensure DOM is fully ready
         setTimeout(() => {
@@ -566,6 +567,222 @@ function initializePage() {
 
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', initializePage);
+
+function initializeProcessCarousel() {
+    const carousels = document.querySelectorAll('.process-carousel');
+    if (!carousels.length) {
+        console.log('ℹ️ No se encontraron carruseles de procesos.');
+        return;
+    }
+
+    carousels.forEach(carousel => {
+        if (carousel.dataset.carouselInitialized === 'true') {
+            return;
+        }
+
+        const viewport = carousel.querySelector('.process-window');
+        const track = carousel.querySelector('.process-grid');
+        const slides = Array.from(carousel.querySelectorAll('.process-card'));
+        const prevBtn = carousel.querySelector('.process-nav--prev');
+        const nextBtn = carousel.querySelector('.process-nav--next');
+        const dots = Array.from(carousel.querySelectorAll('.process-dot'));
+        const autoplayAttr = carousel.getAttribute('data-autoplay');
+        const autoplayInterval = parseInt(carousel.getAttribute('data-interval'), 10) || 8000;
+        const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!viewport || !track || slides.length === 0) {
+            console.warn('⚠️ Carrusel de procesos incompleto: faltan elementos esenciales.');
+            return;
+        }
+
+        carousel.dataset.carouselInitialized = 'true';
+
+        dots.forEach(dot => {
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('tabindex', '-1');
+        });
+
+        viewport.setAttribute('role', 'region');
+        viewport.setAttribute('aria-live', 'polite');
+
+        let slidePositions = [];
+        let currentIndex = 0;
+        let autoplayTimer = null;
+        let resumeTimer = null;
+        let isAutoScrolling = false;
+        let autoScrollReset = null;
+
+        const shouldAutoplay = autoplayAttr !== 'false' && slides.length > 1 && !prefersReducedMotion;
+
+        const computePositions = () => {
+            slidePositions = slides.map(slide => slide.offsetLeft - track.offsetLeft);
+        };
+
+        const setActiveState = index => {
+            slides.forEach((slide, slideIndex) => {
+                const isActive = slideIndex === index;
+                slide.classList.toggle('is-active', isActive);
+                slide.setAttribute('aria-hidden', (!isActive).toString());
+                slide.setAttribute('tabindex', isActive ? '0' : '-1');
+            });
+
+            dots.forEach((dot, dotIndex) => {
+                const isActive = dotIndex === index;
+                dot.classList.toggle('is-active', isActive);
+                dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                dot.setAttribute('tabindex', isActive ? '0' : '-1');
+            });
+        };
+
+        const goToSlide = (targetIndex, { animate = true, focus = false } = {}) => {
+            if (slides.length === 0) return;
+            if (targetIndex < 0) {
+                targetIndex = slides.length - 1;
+            } else if (targetIndex >= slides.length) {
+                targetIndex = 0;
+            }
+
+            currentIndex = targetIndex;
+            const position = slidePositions[targetIndex] || 0;
+
+            isAutoScrolling = animate;
+            if (autoScrollReset) {
+                clearTimeout(autoScrollReset);
+            }
+
+            viewport.scrollTo({
+                left: position,
+                behavior: animate ? 'smooth' : 'auto'
+            });
+
+            if (animate) {
+                autoScrollReset = setTimeout(() => {
+                    isAutoScrolling = false;
+                }, 450);
+            } else {
+                isAutoScrolling = false;
+            }
+
+            setActiveState(currentIndex);
+
+            if (focus) {
+                requestAnimationFrame(() => {
+                    slides[currentIndex].focus({ preventScroll: true });
+                });
+            }
+        };
+
+        const stopAutoplay = () => {
+            if (autoplayTimer) {
+                clearInterval(autoplayTimer);
+                autoplayTimer = null;
+            }
+            if (resumeTimer) {
+                clearTimeout(resumeTimer);
+                resumeTimer = null;
+            }
+        };
+
+        const startAutoplay = () => {
+            if (!shouldAutoplay) {
+                return;
+            }
+            stopAutoplay();
+            autoplayTimer = setInterval(() => {
+                goToSlide(currentIndex + 1, { animate: true });
+            }, autoplayInterval);
+        };
+
+        const pauseAndResumeAutoplay = () => {
+            if (!shouldAutoplay) return;
+            stopAutoplay();
+            resumeTimer = setTimeout(() => {
+                startAutoplay();
+            }, autoplayInterval * 1.2);
+        };
+
+        const handlePrev = () => {
+            pauseAndResumeAutoplay();
+            goToSlide(currentIndex - 1, { animate: true, focus: true });
+        };
+
+        const handleNext = () => {
+            pauseAndResumeAutoplay();
+            goToSlide(currentIndex + 1, { animate: true, focus: true });
+        };
+
+        const syncSlideFromScroll = debounce(() => {
+            if (isAutoScrolling) return;
+            const currentScroll = viewport.scrollLeft;
+            let nearestIndex = currentIndex;
+            let nearestDistance = Math.abs(currentScroll - (slidePositions[currentIndex] || 0));
+
+            slidePositions.forEach((position, index) => {
+                const distance = Math.abs(currentScroll - position);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestIndex = index;
+                }
+            });
+
+            if (nearestIndex !== currentIndex) {
+                currentIndex = nearestIndex;
+                setActiveState(currentIndex);
+            }
+        }, 120);
+
+        const handleResize = debounce(() => {
+            computePositions();
+            goToSlide(currentIndex, { animate: false });
+        }, 150);
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', handlePrev);
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', handleNext);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                pauseAndResumeAutoplay();
+                goToSlide(index, { animate: true, focus: true });
+            });
+        });
+
+        viewport.addEventListener('scroll', () => {
+            if (isAutoScrolling) return;
+            pauseAndResumeAutoplay();
+            syncSlideFromScroll();
+        }, { passive: true });
+
+        viewport.addEventListener('pointerdown', () => {
+            pauseAndResumeAutoplay();
+        }, { passive: true });
+
+        carousel.addEventListener('mouseenter', stopAutoplay);
+        carousel.addEventListener('mouseleave', startAutoplay);
+
+        carousel.addEventListener('focusin', stopAutoplay);
+        carousel.addEventListener('focusout', (event) => {
+            if (!carousel.contains(event.relatedTarget)) {
+                startAutoplay();
+            }
+        });
+
+        window.addEventListener('resize', handleResize);
+
+        requestAnimationFrame(() => {
+            computePositions();
+            setActiveState(currentIndex);
+            goToSlide(0, { animate: false });
+            startAutoplay();
+        });
+
+        console.log(`🎠 Carrusel de procesos inicializado con ${slides.length} tarjetas.`);
+    });
+}
 
 // Initialize FAQ functionality
 function initializeFAQ() {
