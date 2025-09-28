@@ -742,16 +742,18 @@ function initializeProcessCarousel() {
 
         if (prevBtn) {
             prevBtn.addEventListener('click', handlePrev);
-            prevBtn.addEventListener('touchstart', (event) => {
+            prevBtn.addEventListener('touchend', (event) => {
                 event.preventDefault();
+                event.stopPropagation();
                 handlePrev();
             }, { passive: false });
         }
 
         if (nextBtn) {
             nextBtn.addEventListener('click', handleNext);
-            nextBtn.addEventListener('touchstart', (event) => {
+            nextBtn.addEventListener('touchend', (event) => {
                 event.preventDefault();
+                event.stopPropagation();
                 handleNext();
             }, { passive: false });
         }

@@ -1163,17 +1163,78 @@ a:focus:not(:focus-visible) {
     z-index: 2 !important;
 }
 
-@media (pointer: coarse) {
-    .process-card:active,
-    .process-card:focus-visible {
-        transform: translateY(-2px) scale(0.995) !important;
-        box-shadow: var(--shadow-lg) !important;
-        border-color: var(--primary-color) !important;
+/* Mobile-specific carousel optimizations */
+@media (max-width: 768px) {
+    .process-grid {
+        gap: 1.5rem !important;
+        padding: 1rem 50% 1rem 50% !important;
     }
     
-    .process-card:active::after,
-    .process-card:focus-visible::after {
+    .process-card {
+        flex: 0 0 260px !important;
+        max-width: 260px !important;
+        opacity: 0.3 !important;
+        transform: scale(0.8) !important;
+    }
+    
+    .process-card.is-active {
         opacity: 1 !important;
+        transform: scale(1) translateY(-4px) !important;
+        box-shadow: var(--shadow-lg) !important;
+    }
+    
+    .process-controls {
+        margin-top: 1rem !important;
+        gap: 1.5rem !important;
+    }
+    
+    .process-nav {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Very small screens optimization */
+@media (max-width: 480px) {
+    .process-grid {
+        gap: 1rem !important;
+        padding: 0.75rem 50% 0.75rem 50% !important;
+    }
+    
+    .process-card {
+        flex: 0 0 240px !important;
+        max-width: 240px !important;
+        padding: 1.25rem !important;
+        opacity: 0.25 !important;
+        transform: scale(0.75) !important;
+    }
+    
+    .process-card.is-active {
+        transform: scale(0.95) translateY(-2px) !important;
+    }
+    
+    .process-card h3 {
+        font-size: 1rem !important;
+    }
+    
+    .process-card p {
+        font-size: 0.85rem !important;
+    }
+    
+    .process-features li {
+        font-size: 0.8rem !important;
+    }
+    
+    .process-controls {
+        margin-top: 0.75rem !important;
+        gap: 1rem !important;
+    }
+    
+    .process-nav {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 0.85rem !important;
     }
 }
 
@@ -1198,6 +1259,8 @@ a:focus:not(:focus-visible) {
     box-shadow: var(--shadow-sm) !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
 }
 
 .process-nav:hover,
@@ -1205,6 +1268,11 @@ a:focus:not(:focus-visible) {
     border-color: var(--primary-color) !important;
     box-shadow: var(--shadow-md) !important;
     transform: translateY(-2px) !important;
+}
+
+.process-nav:active {
+    transform: translateY(0px) scale(0.95) !important;
+    box-shadow: var(--shadow-sm) !important;
 }
 
 .process-nav:disabled {
