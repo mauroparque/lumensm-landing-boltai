@@ -1,7 +1,7 @@
 # BRIEF_TEMPLATE.md
 
 Meta:
-- Documento: CONT-001_Brief.md
+- Documento: CONT-xxx-brief.md
 - Fecha:
 - Responsable:
 - Versión:
