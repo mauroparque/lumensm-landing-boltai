@@ -935,108 +935,12 @@ address, address * {
         grid-template-columns: 1fr;
     }
     
-    .process-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .blog-grid {
         grid-template-columns: 1fr;
     }
     
     .testimonials-grid {
         grid-template-columns: 1fr;
-    }
-    
-    .microcopy-badges {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-    }
-    
-    .badge {
-        min-width: 250px;
-        justify-content: center;
-        font-size: 0.9rem;
-        padding: 0.75rem 1rem;
-    }
-    
-    .process-card {
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    .process-icon {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 1rem;
-    }
-    
-    .process-icon i {
-        font-size: 1.3rem;
-    }
-    
-    .process-card h3 {
-        font-size: 1.2rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .process-features {
-        margin-top: 1rem;
-    }
-    
-    .process-features li {
-        padding: 0.4rem 0;
-        font-size: 0.9rem;
-        padding-left: 1.2rem;
-    }
-    
-    .urgent-notice {
-        padding: 1rem;
-        margin: 1.5rem 0;
-        font-size: 0.9rem;
-    }
-    
-    .urgent-notice h4 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    /* FAQ Mobile Styles */
-    .faq-container {
-        padding: 0;
-    }
-    
-    .faq-item {
-        margin-bottom: 0.75rem;
-        border-radius: 8px;
-    }
-    
-    .faq-question {
-        padding: 1rem;
-        font-size: 1rem;
-        line-height: 1.4;
-    }
-    
-    .faq-question span {
-        padding-right: 0.5rem;
-    }
-    
-    .faq-icon {
-        font-size: 1rem;
-        flex-shrink: 0;
-    }
-    
-    .faq-answer {
-        padding: 0 1rem 0;
-    }
-    
-    .faq-answer.active {
-        padding: 0 1rem 1rem;
-    }
-    
-    .faq-answer-content {
-        font-size: 0.9rem;
-        line-height: 1.5;
     }
     
     h1 { font-size: 2rem; }
@@ -1046,7 +950,7 @@ address, address * {
     .whatsapp-float {
         width: 50px;
         height: 50px;
-        bottom: 80px;    /* Ajustado para móviles */
+        bottom: 80px;
         right: 15px;
         font-size: 1.3rem;
     }
@@ -1054,47 +958,15 @@ address, address * {
     .scroll-to-top {
         width: 45px;
         height: 45px;
-        bottom: 15px;  /* Más cerca del borde en móvil */
+        bottom: 15px;
         right: 15px;
         font-size: 1rem;
     }
 }
 
-/* Tablet Styles */
-@media (min-width: 481px) and (max-width: 768px) {
-    .process-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-    
-    .microcopy-badges {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-    
-    .badge {
-        min-width: auto;
-        padding: 0.6rem 1rem;
-    }
-    
-    .faq-container {
-        padding: 0 1rem;
-    }
-    
-    .process-card {
-        padding: 1.75rem;
-    }
-    
-    .urgent-notice {
-        padding: 1.25rem;
-    }
-}
-
 @media (max-width: 480px) {
     .container {
-        padding: 0 15px;
+        padding: 0 10px !important;
     }
 
     .whatsapp-float {
@@ -1118,13 +990,14 @@ address, address * {
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem !important;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem !important;
     }
     
+    /* Override all section paddings for very small screens */
     .services,
     .about,
     .how-it-works,
@@ -1132,103 +1005,41 @@ address, address * {
     .blog,
     .contact,
     .faq {
-        padding: 60px 0;
+        padding: 50px 0 !important;
     }
     
-    .service-card,
-    .process-card,
-    .testimonial-card {
-        padding: 1.5rem;
-    }
-    
-    .contact-item {
-        padding: 1rem;
-    }
-    
-    .urgent-notice {
-        padding: 1rem;
-        margin: 1.5rem 0;
-    }
-    
+    /* Make badges even more compact */
     .badge {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.8rem;
-        min-width: 200px;
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.8rem !important;
+        max-width: 260px !important;
     }
     
-    .microcopy-badges {
-        gap: 0.5rem;
-        margin: 1.5rem 0;
-    }
-    
-    .process-card {
-        padding: 1.2rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .process-card h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .process-card p {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-    
-    .process-features li {
-        font-size: 0.85rem;
-        padding: 0.3rem 0;
-    }
-    
-    .process-icon {
-        width: 45px;
-        height: 45px;
-        margin-bottom: 0.75rem;
-    }
-    
-    .process-icon i {
-        font-size: 1.2rem;
-    }
-    
-    /* FAQ Mobile Small */
-    .faq {
-        padding: 50px 0;
-    }
-    
-    .faq-item {
-        margin-bottom: 0.5rem;
-    }
-    
+    /* Very compact FAQ for tiny screens */
     .faq-question {
-        padding: 0.8rem;
-        font-size: 0.95rem;
-    }
-    
-    .faq-answer {
-        padding: 0 0.8rem 0;
-    }
-    
-    .faq-answer.active {
-        padding: 0 0.8rem 0.8rem;
+        padding: 0.75rem !important;
+        font-size: 0.95rem !important;
     }
     
     .faq-answer-content {
-        font-size: 0.85rem;
-        line-height: 1.4;
+        padding: 0 0.75rem 0.75rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Compact process cards */
+    .process-card {
+        padding: 1.25rem !important;
+    }
+    
+    .process-card h3 {
+        font-size: 1.05rem !important;
     }
     
     .urgent-notice {
-        padding: 0.8rem;
-        margin: 1rem 0;
-        font-size: 0.85rem;
+        margin: 1rem 10px !important;
+        padding: 0.75rem !important;
+        font-size: 0.85rem !important;
     }
-    
-    .urgent-notice h4 {
-        font-size: 0.95rem;
-    }
-    
-
 }
 
 /* Animations */
@@ -1283,109 +1094,249 @@ a:focus:not(:focus-visible) {
     outline: none;
 }
 
-/* Cómo Funciona Section */
+/* Mobile-First Approach - Base styles for mobile */
 .how-it-works {
-    padding: 100px 0;
-    background-color: var(--gray-50);
+    padding: 60px 0 !important;
+    background-color: var(--gray-50) !important;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.how-it-works .container {
+    padding: 0 15px !important;
+    max-width: 100%;
 }
 
 .process-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
 }
 
 .process-card {
-    background-color: var(--white);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-sm);
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.process-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
+    background-color: var(--white) !important;
+    padding: 1.5rem !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow-sm) !important;
+    border: 2px solid var(--gray-200) !important;
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 .process-icon {
-    width: 60px;
-    height: 60px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 1;
+    width: 50px !important;
+    height: 50px !important;
+    background-color: var(--primary-color) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 1rem !important;
 }
 
 .process-icon i {
-    font-size: 1.5rem;
-    color: var(--white);
+    font-size: 1.3rem !important;
+    color: var(--white) !important;
 }
 
 .process-card h3 {
-    color: var(--text-primary);
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
+    color: var(--text-primary) !important;
+    margin-bottom: 0.75rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
 }
 
 .process-card p {
-    margin-bottom: 1.5rem;
-    color: var(--text-secondary);
+    margin-bottom: 1rem !important;
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
 }
 
 .process-features {
-    list-style: none;
-    padding: 0;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .process-features li {
-    padding: 0.5rem 0;
-    color: var(--text-secondary);
-    position: relative;
-    padding-left: 1.5rem;
-    font-size: 0.9rem;
+    padding: 0.3rem 0 !important;
+    color: var(--text-secondary) !important;
+    position: relative !important;
+    padding-left: 1.2rem !important;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
 }
 
 .process-features li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: var(--primary-color);
-    font-weight: bold;
+    content: '•' !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: var(--primary-color) !important;
+    font-weight: bold !important;
 }
 
 .microcopy-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin: 2rem 0;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    margin: 2rem 0 !important;
+    padding: 0 15px !important;
 }
 
 .badge {
-    background-color: var(--accent-color);
-    color: var(--primary-color);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    white-space: nowrap;
+    background-color: var(--accent-color) !important;
+    color: var(--primary-color) !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 20px !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    max-width: 280px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
 }
 
 .badge i {
-    font-size: 0.9rem;
-    flex-shrink: 0;
+    font-size: 0.9rem !important;
+    flex-shrink: 0 !important;
+}
+
+/* FAQ Mobile Styles - Force application */
+.faq {
+    padding: 60px 0 !important;
+    background-color: var(--white) !important;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.faq .container {
+    padding: 0 15px !important;
+    max-width: 100%;
+}
+
+.faq-container {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+.faq-item {
+    margin-bottom: 0.75rem !important;
+    border: 2px solid var(--gray-200) !important;
+    border-radius: var(--border-radius) !important;
+    overflow: hidden !important;
+    background-color: var(--white) !important;
+    box-shadow: var(--shadow-sm) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.faq-question {
+    width: 100% !important;
+    padding: 1rem !important;
+    background-color: var(--white) !important;
+    border: none !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: var(--text-primary) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    line-height: 1.4 !important;
+    box-sizing: border-box !important;
+}
+
+.faq-question span {
+    flex: 1 !important;
+    padding-right: 1rem !important;
+    word-wrap: break-word !important;
+}
+
+.faq-icon {
+    font-size: 1rem !important;
+    color: var(--primary-color) !important;
+    flex-shrink: 0 !important;
+    margin-left: 0.5rem !important;
+    transition: transform 0.3s ease !important;
+}
+
+.faq-answer {
+    background-color: var(--white) !important;
+    overflow: hidden !important;
+    max-height: 0 !important;
+    transition: max-height 0.3s ease !important;
+}
+
+.faq-answer.active {
+    max-height: 500px !important;
+}
+
+.faq-answer-content {
+    padding: 0 1rem 1rem !important;
+    color: var(--text-secondary) !important;
+    line-height: 1.5 !important;
+    font-size: 0.9rem !important;
+}
+
+.urgent-notice {
+    background-color: #FEF2F2 !important;
+    border-left: 4px solid #EF4444 !important;
+    padding: 1rem !important;
+    margin: 1.5rem 15px !important;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0 !important;
+    font-size: 0.9rem !important;
+}
+
+.urgent-notice h4 {
+    color: #DC2626 !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 1rem !important;
+}
+
+.urgent-notice p {
+    color: #7F1D1D !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+    .how-it-works {
+        padding: 100px 0 !important;
+    }
+    
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem !important;
+    }
+    
+    .microcopy-badges {
+        flex-direction: row !important;
+        justify-content: center !important;
+    }
+    
+    .badge {
+        width: auto !important;
+        max-width: none !important;
+    }
+    
+    .faq {
+        padding: 100px 0 !important;
+    }
+    
+    .faq-container {
+        max-width: 800px !important;
+    }
 }
 
 /* FAQ Section */

@@ -571,84 +571,114 @@ document.addEventListener('DOMContentLoaded', initializePage);
 function initializeFAQ() {
     console.log('🔧 Inicializando funcionalidad FAQ...');
     
-    const faqButtons = document.querySelectorAll('.faq-question');
-    
-    if (faqButtons.length === 0) {
-        console.warn('⚠️ No se encontraron botones FAQ');
-        return;
-    }
-    
-    console.log(`📋 Encontrados ${faqButtons.length} botones FAQ`);
-    
-    faqButtons.forEach((button, index) => {
-        // Remove any existing event listeners to avoid duplicates
-        button.replaceWith(button.cloneNode(true));
-        const newButton = document.querySelectorAll('.faq-question')[index];
+    // Wait a bit to ensure DOM is fully rendered
+    setTimeout(() => {
+        const faqButtons = document.querySelectorAll('.faq-question');
         
-        newButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('🖱️ FAQ clicked:', this.querySelector('span').textContent);
-            toggleFaqItem(this);
-        });
+        if (faqButtons.length === 0) {
+            console.warn('⚠️ No se encontraron botones FAQ');
+            return;
+        }
         
-        // Add keyboard support
-        newButton.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                console.log('⌨️ FAQ keyboard activated:', this.querySelector('span').textContent);
-                toggleFaqItem(this);
+        console.log(`📋 Encontrados ${faqButtons.length} botones FAQ`);
+        
+        faqButtons.forEach((button, index) => {
+            // Ensure the button has proper structure
+            if (!button.querySelector('.faq-icon')) {
+                console.warn(`⚠️ FAQ ${index} missing icon`);
+                return;
             }
+            
+            // Remove any existing listeners and add new ones
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            
+            newButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🖱️ FAQ clicked:', this.querySelector('span')?.textContent || 'Unknown FAQ');
+                toggleFaqItem(this);
+            });
+            
+            // Add keyboard support
+            newButton.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('⌨️ FAQ keyboard activated:', this.querySelector('span')?.textContent || 'Unknown FAQ');
+                    toggleFaqItem(this);
+                }
+            });
+            
+            // Ensure proper attributes
+            newButton.setAttribute('type', 'button');
+            newButton.setAttribute('aria-expanded', 'false');
         });
-    });
+        
+        console.log('✅ FAQ functionality initialized successfully');
+    }, 500);
 }
 
 // Improved FAQ toggle function
 function toggleFaqItem(button) {
+    if (!button || !button.parentElement) {
+        console.error('❌ Invalid FAQ button or structure');
+        return;
+    }
+    
     const faqItem = button.parentElement;
     const faqAnswer = faqItem.querySelector('.faq-answer');
     const faqIcon = button.querySelector('.faq-icon');
     
-    if (!faqItem || !faqAnswer || !faqIcon) {
-        console.error('❌ FAQ elements not found');
+    if (!faqItem || !faqAnswer) {
+        console.error('❌ FAQ elements not found', {
+            faqItem: !!faqItem,
+            faqAnswer: !!faqAnswer,
+            faqIcon: !!faqIcon
+        });
         return;
     }
     
     const isActive = faqItem.classList.contains('active');
     
-    // Close all other FAQ items with staggered timing
-    const otherActiveItems = document.querySelectorAll('.faq-item.active');
-    otherActiveItems.forEach((item, index) => {
+    // Close all other FAQ items first
+    document.querySelectorAll('.faq-item.active').forEach((item, index) => {
         if (item !== faqItem) {
             setTimeout(() => {
                 item.classList.remove('active');
                 const otherAnswer = item.querySelector('.faq-answer');
+                const otherButton = item.querySelector('.faq-question');
+                
                 if (otherAnswer) {
                     otherAnswer.classList.remove('active');
                 }
-            }, index * 50); // Stagger the closing by 50ms each
+                if (otherButton) {
+                    otherButton.setAttribute('aria-expanded', 'false');
+                }
+            }, index * 50);
         }
     });
     
-    // Toggle current FAQ item with slight delay if closing others
-    const toggleDelay = otherActiveItems.length > 1 ? 100 : 0;
-    
+    // Toggle current FAQ item
     setTimeout(() => {
         if (isActive) {
-            // Closing animation
+            // Closing
             faqAnswer.classList.remove('active');
+            button.setAttribute('aria-expanded', 'false');
             setTimeout(() => {
                 faqItem.classList.remove('active');
-            }, 50);
+            }, 100);
             console.log('📝 FAQ cerrada con animación fluida');
         } else {
-            // Opening animation
+            // Opening
             faqItem.classList.add('active');
+            button.setAttribute('aria-expanded', 'true');
             setTimeout(() => {
                 faqAnswer.classList.add('active');
-            }, 50);
+            }, 100);
             console.log('📝 FAQ abierta con animación fluida');
         }
-    }, toggleDelay);
+    }, 100);
 }
 
 // Performance tracking
