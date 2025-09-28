@@ -1192,9 +1192,17 @@ a:focus:not(:focus-visible) {
     }
     
     .process-nav {
-        width: 38px !important;
-        height: 38px !important;
+        width: 40px !important;
+        height: 40px !important;
         font-size: 0.9rem !important;
+    }
+    
+    .process-nav--prev {
+        left: 15px !important;
+    }
+    
+    .process-nav--next {
+        right: 15px !important;
     }
 }
 
@@ -1243,6 +1251,14 @@ a:focus:not(:focus-visible) {
         height: 36px !important;
         font-size: 0.85rem !important;
     }
+    
+    .process-nav--prev {
+        left: 10px !important;
+    }
+    
+    .process-nav--next {
+        right: 10px !important;
+    }
 }
 
 .process-controls {
@@ -1251,39 +1267,65 @@ a:focus:not(:focus-visible) {
     justify-content: center !important;
     gap: 1rem !important;
     margin-top: 0.5rem !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.process-nav-arrows {
+    position: absolute !important;
+    top: 50% !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: translateY(-50%) !important;
+    pointer-events: none !important;
+    z-index: 15 !important;
 }
 
 .process-nav {
-    width: 42px !important;
-    height: 42px !important;
+    position: absolute !important;
+    top: 0 !important;
+    transform: none !important;
+    width: 44px !important;
+    height: 44px !important;
     border-radius: 50% !important;
-    border: 1px solid var(--gray-200) !important;
-    background-color: var(--white) !important;
+    border: 2px solid var(--white) !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
     color: var(--primary-color) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: var(--shadow-sm) !important;
+    box-shadow: var(--shadow-lg) !important;
     cursor: pointer !important;
     transition: all 0.3s ease !important;
     touch-action: manipulation !important;
     -webkit-tap-highlight-color: transparent !important;
+    z-index: 20 !important;
+    pointer-events: auto !important;
+}
+
+.process-nav--prev {
+    left: 20px !important;
+}
+
+.process-nav--next {
+    right: 20px !important;
 }
 
 .process-nav:hover,
 .process-nav:focus-visible {
     border-color: var(--primary-color) !important;
-    box-shadow: var(--shadow-md) !important;
-    transform: translateY(-2px) !important;
+    background-color: var(--white) !important;
+    box-shadow: var(--shadow-xl) !important;
+    transform: scale(1.05) !important;
 }
 
 .process-nav:active {
-    transform: translateY(0px) scale(0.95) !important;
-    box-shadow: var(--shadow-sm) !important;
+    transform: scale(0.95) !important;
+    box-shadow: var(--shadow-md) !important;
 }
 
 .process-nav:disabled {
-    opacity: 0.4 !important;
+    opacity: 0.3 !important;
     cursor: not-allowed !important;
     transform: none !important;
 }
