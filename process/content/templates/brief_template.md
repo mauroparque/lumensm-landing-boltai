@@ -62,3 +62,50 @@ Meta:
 - Supuestos (lo que aún no se sabe y se validará más adelante).
 
 ## 12) JSON estructurado del brief
+
+{
+"objetivo": "",
+"contexto": "",
+"kpi": [],
+"buyer": {
+"perfil": "",
+"etapa": "",
+"necesidades": []
+},
+"propuesta_valor": "",
+"diferenciales": [],
+"tono": "",
+"glosario_clave": [],
+"estructura": {
+"h1": "",
+"h2": [],
+"h3": []
+},
+"cta": {
+"principal": "",
+"secundarias": []
+},
+"faqs": [],
+"investigacion": {
+"intencion": "",
+"subtemas": [],
+"lagunas": []
+},
+"enlaces": {
+"internos": [],
+"externos": []
+},
+"onpage": {
+"meta_title": "",
+"meta_description": "",
+"faq_jsonld": false
+},
+"criterios_aceptacion": [],
+"riesgos": [],
+"supuestos": []
+}
+
+## 13) Resumen para traspaso (para A2)
+- Puntos clave que no se pueden perder:
+- Dudas pendientes para resolver en redacción:
+- Enlaces/archivos adjuntos relevantes:
