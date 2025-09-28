@@ -118,31 +118,4 @@ Acciones recomendadas
 Decisión (Aprobado / Aprobado con cambios / Rechazado)  
 Evidencias adjuntas (enlaces a archivos del Space)
 
-## THREADS.md — Convenciones en un solo Space
-- Crear cuatro hilos: “A1 – Estratega”, “A2 – Redactor”, “A3 – SEO”, “A4 – QA”.  
-- Fijar en el primer mensaje de cada hilo las instrucciones del agente y el modelo seleccionado.  
-- Al pasar de hilo, pegar el “Resumen para traspaso”, adjuntar el archivo actualizado y referenciar documentos del Space.  
-- Usar “Web + Files” cuando se requiera investigación; usar “Files” para edición/QA fina.  
-- Cerrar cada hilo con entregable adjunto y checklist de criterios de aceptación.
-
-## OPERATIONS.md — Operación sin Space Maestro
-- Fuente única de verdad: archivos del Space, sin duplicados; versionar por fecha.  
-- Gobernanza distribuida: cada hilo valida la integridad del traspaso antes de iniciar su fase.  
-- Evidencias externas: generar fuera (p. ej., auditorías) y subir al Space con nombre/fecha; el hilo A4 debe referenciarlas en QA_REPORT.  
 - Registro: mantener un pequeño “registro de cambios” al final de cada entregable con decisiones y justificaciones.
-
----
-
-# PROMPTS BASE (primer mensaje de cada hilo)
-
-## A1 – Estratega
-“Actúa como estratega de contenido. Realiza solo las preguntas mínimas indispensables y luego entrega un Brief en Markdown con: propósito, buyer persona, propuesta de valor, tono, estructura H1–H3, CTA, FAQs, keywords orientativas y criterios de aceptación para A2. Añade un bloque JSON con campos: objetivo, buyer, tono, secciones[], ctas[], faqs[], keywords[]. Cierra con ‘Resumen para traspaso’ para A2.”
-
-## A2 – Redactor
-“Redacta el borrador conforme al Brief adjunto. Entrega en Markdown/HTML con H1–H3 claros, párrafos breves, listas planas y tablas simples. Incluye meta title (~50–60 visibles), meta description (~120–155), alt‑text descriptivo, enlaces internos/externos sugeridos y bloque FAQPage JSON‑LD si corresponde. Cierra con ‘Resumen para traspaso’ para A3.”
-
-## A3 – SEO
-“Optimiza on‑page usando la búsqueda integrada para revisar intención y subtemas. Ajusta title/description a rangos visibles, refuerza H‑tags y semántica, mejora enlazado interno/externo con justificación y valida/ajusta el FAQPage JSON‑LD si existe. Entrega versión optimizada, Diff de cambios, SEO_CHECKLIST y ‘Resumen para traspaso’ para A4.”
-
-## A4 – QA
-“Realiza revisión editorial y de accesibilidad basada en la WCAG_Checklist. Si corresponde, solicita y analiza reportes externos (p. ej., Lighthouse/Axe) que se adjuntarán en este hilo. Entrega QA_REPORT con severidades, acciones recomendadas y decisión final (Aprobado / Aprobado con cambios / Rechazado).”
