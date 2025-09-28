@@ -546,7 +546,11 @@ function initializePage() {
         createScrollToTopButton();
         createSkipLink();
         showWelcomeMessage();
-        initializeFAQ(); // Add FAQ initialization
+        
+        // Add a small delay to ensure DOM is fully ready
+        setTimeout(() => {
+            initializeFAQ();
+        }, 100);
         
         console.log('✅ Página inicializada correctamente');
         
@@ -563,47 +567,88 @@ function initializePage() {
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', initializePage);
 
-// FAQ Toggle Function (Global scope for inline onclick)
-window.toggleFaq = function(button) {
-    const faqItem = button.parentElement;
-    const faqAnswer = faqItem.querySelector('.faq-answer');
-    const isActive = faqItem.classList.contains('active');
-
-    // Close all other FAQ items
-    document.querySelectorAll('.faq-item.active').forEach(item => {
-        if (item !== faqItem) {
-            item.classList.remove('active');
-            const otherAnswer = item.querySelector('.faq-answer');
-            if (otherAnswer) {
-                otherAnswer.classList.remove('active');
-            }
-        }
-    });
-
-    // Toggle current FAQ item
-    if (isActive) {
-        faqItem.classList.remove('active');
-        faqAnswer.classList.remove('active');
-    } else {
-        faqItem.classList.add('active');
-        faqAnswer.classList.add('active');
-    }
-};
-
 // Initialize FAQ functionality
 function initializeFAQ() {
+    console.log('🔧 Inicializando funcionalidad FAQ...');
+    
     const faqButtons = document.querySelectorAll('.faq-question');
-    faqButtons.forEach(button => {
-        button.addEventListener('click', () => toggleFaq(button));
+    
+    if (faqButtons.length === 0) {
+        console.warn('⚠️ No se encontraron botones FAQ');
+        return;
+    }
+    
+    console.log(`📋 Encontrados ${faqButtons.length} botones FAQ`);
+    
+    faqButtons.forEach((button, index) => {
+        // Remove any existing event listeners to avoid duplicates
+        button.replaceWith(button.cloneNode(true));
+        const newButton = document.querySelectorAll('.faq-question')[index];
+        
+        newButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('🖱️ FAQ clicked:', this.querySelector('span').textContent);
+            toggleFaqItem(this);
+        });
         
         // Add keyboard support
-        button.addEventListener('keydown', (e) => {
+        newButton.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                toggleFaq(button);
+                console.log('⌨️ FAQ keyboard activated:', this.querySelector('span').textContent);
+                toggleFaqItem(this);
             }
         });
     });
+}
+
+// Improved FAQ toggle function
+function toggleFaqItem(button) {
+    const faqItem = button.parentElement;
+    const faqAnswer = faqItem.querySelector('.faq-answer');
+    const faqIcon = button.querySelector('.faq-icon');
+    
+    if (!faqItem || !faqAnswer || !faqIcon) {
+        console.error('❌ FAQ elements not found');
+        return;
+    }
+    
+    const isActive = faqItem.classList.contains('active');
+    
+    // Close all other FAQ items with staggered timing
+    const otherActiveItems = document.querySelectorAll('.faq-item.active');
+    otherActiveItems.forEach((item, index) => {
+        if (item !== faqItem) {
+            setTimeout(() => {
+                item.classList.remove('active');
+                const otherAnswer = item.querySelector('.faq-answer');
+                if (otherAnswer) {
+                    otherAnswer.classList.remove('active');
+                }
+            }, index * 50); // Stagger the closing by 50ms each
+        }
+    });
+    
+    // Toggle current FAQ item with slight delay if closing others
+    const toggleDelay = otherActiveItems.length > 1 ? 100 : 0;
+    
+    setTimeout(() => {
+        if (isActive) {
+            // Closing animation
+            faqAnswer.classList.remove('active');
+            setTimeout(() => {
+                faqItem.classList.remove('active');
+            }, 50);
+            console.log('📝 FAQ cerrada con animación fluida');
+        } else {
+            // Opening animation
+            faqItem.classList.add('active');
+            setTimeout(() => {
+                faqAnswer.classList.add('active');
+            }, 50);
+            console.log('📝 FAQ abierta con animación fluida');
+        }
+    }, toggleDelay);
 }
 
 // Performance tracking
