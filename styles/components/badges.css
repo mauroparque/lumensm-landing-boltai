@@ -1,0 +1,93 @@
+/* ================================
+   BADGES & NOTICES
+   Badges informativos y avisos
+   ================================ */
+
+/* === Microcopy Badges === */
+.microcopy-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0;
+    padding: 0 15px;
+}
+
+.badge {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-lg);
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.badge i {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* === Urgent Notice === */
+.urgent-notice {
+    background-color: #FEF2F2;
+    border-left: 4px solid #EF4444;
+    padding: 1rem;
+    margin: 1.5rem 15px;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    font-size: 0.9rem;
+}
+
+.urgent-notice h4 {
+    color: #DC2626;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.urgent-notice p {
+    color: #7F1D1D;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 480px) {
+    .badge {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+        max-width: 260px;
+    }
+    
+    .urgent-notice {
+        margin: 1rem 10px;
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .microcopy-badges {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .badge {
+        width: auto;
+        max-width: none;
+    }
+    
+    .urgent-notice {
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+}

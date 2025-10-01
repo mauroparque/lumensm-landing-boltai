@@ -43,9 +43,9 @@
     <meta name="author" content="Lumen Salud Mental">
     <meta name="theme-color" content="#178E79">
 
-    <!-- Preload hero image for LCP -->
-    <link rel="preload" as="image" href="assets/hero/hero-1200.avif" type="image/avif">
-    <link rel="preload" as="image" href="assets/hero/hero-1200.webp" type="image/webp">
+    <!-- Preload hero image for LCP - Comentado para evitar warning si no se usa inmediatamente -->
+    <!-- <link rel="preload" as="image" href="assets/hero/hero-1200.avif" type="image/avif"> -->
+    <!-- <link rel="preload" as="image" href="assets/hero/hero-1200.webp" type="image/webp"> -->
     
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/components.css">
@@ -426,22 +426,22 @@
                     </div>
                     <div class="contact-form">
                         <h3>Envía un Mensaje</h3>
-                        <form id="contactForm" action="https://formspree.io/f/xnngadeq" method="POST">
+                        <form id="contacto-form" action="https://formspree.io/f/xnngadeq" method="POST">
                             <div class="form-group">
                                 <label for="nombre" class="sr-only">Nombre completo</label>
-                                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email</label>
-                                <input type="email" id="email" name="email" placeholder="Tu email" required>
+                                <input type="email" id="email" name="email" placeholder="Tu email" required autocomplete="email">
                             </div>
                             <div class="form-group">
                                 <label for="telefono" class="sr-only">Teléfono</label>
-                                <input type="tel" id="telefono" name="telefono" placeholder="Tu teléfono">
+                                <input type="tel" id="telefono" name="telefono" placeholder="Tu teléfono" autocomplete="tel">
                             </div>
                             <div class="form-group">
                                 <label for="servicio" class="sr-only">Tipo de servicio</label>
-                                <select id="servicio" name="servicio" required>
+                                <select id="servicio" name="servicio" required autocomplete="off">
                                     <option value="">Selecciona un servicio</option>
                                     <option value="individual">Terapia Individual</option>
                                     <option value="virtual">Consulta Virtual</option>
@@ -451,7 +451,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="mensaje" class="sr-only">Mensaje</label>
-                                <textarea id="mensaje" name="mensaje" placeholder="Cuéntame brevemente cómo puedo ayudarte" rows="5" required></textarea>
+                                <textarea id="mensaje" name="mensaje" placeholder="Cuéntame brevemente cómo puedo ayudarte" rows="5" required autocomplete="off"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
                         </form>

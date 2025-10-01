@@ -1,0 +1,36 @@
+/* ================================
+   BLOG SECTION
+   Sección de blog/noticias
+   ================================ */
+
+/* === Blog Container === */
+.blog {
+    padding: 100px 0;
+    background-color: var(--gray-50);
+}
+
+/* === Blog Grid === */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* === Blog CTA === */
+.blog-cta {
+    text-align: center;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog {
+        padding: 50px 0;
+    }
+}

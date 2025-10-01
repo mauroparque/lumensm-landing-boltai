@@ -1,0 +1,89 @@
+/* ================================
+   VARIABLES CSS - DESIGN TOKENS
+   Sistema de diseño centralizado
+   ================================ */
+
+:root {
+    /* === Colores Primarios === */
+    --primary-color: #178E79;
+    --primary-light: #20A085;
+    --primary-dark: #0F6B5C;
+    
+    /* === Colores Secundarios === */
+    --secondary-color: #F7F9FC;
+    --accent-color: #E8F5F3;
+    
+    /* === Colores de Texto === */
+    --text-primary: #2D3748;
+    --text-secondary: #4A5568;
+    --text-light: #718096;
+    --white: #FFFFFF;
+    
+    /* === Escala de Grises === */
+    --gray-50: #F6F9F7;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    
+    /* === Colores de Estado === */
+    --success: #10B981;
+    --warning: #F59E0B;
+    --error: #EF4444;
+    
+    /* === Tipografía === */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* === Espaciado === */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+    
+    /* === Border Radius === */
+    --border-radius: 12px;
+    --border-radius-sm: 6px;
+    --border-radius-lg: 20px;
+    --border-radius-full: 9999px;
+    
+    /* === Sombras === */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* === Transiciones === */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.6s ease;
+    
+    /* === Breakpoints (para referencia en media queries) === */
+    /* mobile: 0-480px */
+    /* tablet: 481-768px */
+    /* desktop: 769-1024px */
+    /* large: 1025px+ */
+    
+    /* === Z-Index Scale === */
+    --z-base: 1;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal-backdrop: 400;
+    --z-modal: 500;
+    --z-popover: 600;
+    --z-tooltip: 700;
+    --z-notification: 800;
+    --z-navbar: 1000;
+    --z-whatsapp: 1001;
+}
+
+/* === High Contrast Mode === */
+@media (prefers-contrast: high) {
+    :root {
+        --primary-color: #000000;
+        --text-primary: #000000;
+        --text-secondary: #000000;
+    }
+}

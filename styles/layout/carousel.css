@@ -1,0 +1,218 @@
+/* ================================
+   CAROUSEL
+   Sistema de carrusel para "Primeros Pasos"
+   ================================ */
+
+/* === Section Base === */
+.how-it-works {
+    padding: 60px 0;
+    background-color: var(--gray-50);
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.how-it-works .container {
+    padding: 0 15px;
+    max-width: 100%;
+}
+
+/* === Carousel Container === */
+.process-carousel {
+    position: relative;
+    width: 100%;
+    margin: 0 auto 2rem;
+}
+
+/* === Carousel Window === */
+.process-window {
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
+    position: relative;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.process-window::-webkit-scrollbar {
+    display: none;
+}
+
+/* === Carousel Grid === */
+.process-grid {
+    display: flex;
+    align-items: stretch;
+    gap: 2rem;
+    margin: 0;
+    padding: 1.5rem 50% 1.5rem 50%;
+    transition: transform 0.6s ease;
+}
+
+/* === Controls === */
+.process-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* === Navigation Arrows === */
+.process-nav-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 15;
+}
+
+.process-nav {
+    position: absolute;
+    top: 0;
+    transform: none;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--border-radius-full);
+    border: 2px solid var(--white);
+    background-color: rgba(255, 255, 255, 0.95);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 20;
+    pointer-events: auto;
+}
+
+.process-nav--prev {
+    left: 20px;
+}
+
+.process-nav--next {
+    right: 20px;
+}
+
+.process-nav:hover,
+.process-nav:focus-visible {
+    border-color: var(--primary-color);
+    background-color: var(--white);
+    box-shadow: var(--shadow-xl);
+    transform: scale(1.05);
+}
+
+.process-nav:active {
+    transform: scale(0.95);
+    box-shadow: var(--shadow-md);
+}
+
+.process-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* === Indicator Dots === */
+.process-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.process-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--border-radius-full);
+    border: none;
+    background-color: var(--gray-300);
+    cursor: pointer;
+    transition: transform 0.25s ease, background-color 0.25s ease;
+    padding: 0;
+}
+
+.process-dot.is-active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+.process-dot:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+    .process-grid {
+        gap: 1.5rem;
+        padding: 1rem 50% 1rem 50%;
+    }
+    
+    .process-controls {
+        margin-top: 1rem;
+        gap: 1.5rem;
+    }
+    
+    .process-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+    
+    .process-nav--prev {
+        left: 15px;
+    }
+    
+    .process-nav--next {
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .process-grid {
+        gap: 1.25rem;
+        padding: 0.75rem 50% 0.75rem 50%;
+    }
+    
+    .process-controls {
+        margin-top: 0.75rem;
+        gap: 1rem;
+    }
+    
+    .process-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+    
+    .process-nav--prev {
+        left: 10px;
+    }
+    
+    .process-nav--next {
+        right: 10px;
+    }
+}
+
+@media (min-width: 769px) {
+    .how-it-works {
+        padding: 100px 0;
+    }
+    
+    .process-window {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .process-grid {
+        gap: 3rem;
+        padding: 2rem 50% 2rem 50%;
+    }
+}

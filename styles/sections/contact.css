@@ -1,0 +1,69 @@
+/* ================================
+   CONTACT SECTION
+   Sección de contacto
+   ================================ */
+
+/* === Contact Container === */
+.contact {
+    padding: 100px 0;
+    background-color: var(--white);
+}
+
+/* === Contact Content Grid === */
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+/* === Contact Info === */
+.contact-info {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.contact-info.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-info h3 {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
+
+/* === Contact Links === */
+.contact-item a[href^="tel"],
+.contact-item a[href^="mailto"] {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.contact-item a[href^="tel"]:hover,
+.contact-item a[href^="mailto"]:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* === Contact Form === */
+.contact-form h3 {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact {
+        padding: 50px 0;
+    }
+}

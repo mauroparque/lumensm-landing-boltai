@@ -10,6 +10,7 @@ import { initializeContactForm } from './modules/forms.js';
 import { initializeFAQ } from './modules/faq.js';
 import { setupWhatsAppIntegration } from './modules/whatsapp.js';
 import { showNotification } from './modules/notifications.js';
+import { initScrollAnimations } from './modules/animations.js';
 
 /**
  * Initialize all application modules
@@ -20,6 +21,9 @@ function initializeApp() {
 
         // Initialize navigation
         initNavigation();
+
+        // Initialize scroll animations
+        initScrollAnimations();
 
         // Initialize carousels
         initializeCarousels();

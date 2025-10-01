@@ -1,0 +1,30 @@
+/* ================================
+   TESTIMONIALS SECTION
+   Sección de testimonios
+   ================================ */
+
+/* === Testimonials Container === */
+.testimonials {
+    padding: 100px 0;
+    background-color: var(--white);
+}
+
+/* === Testimonials Grid === */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonials {
+        padding: 50px 0;
+    }
+}

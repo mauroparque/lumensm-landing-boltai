@@ -1,0 +1,70 @@
+/* ================================
+   RESET & BASE STYLES
+   Normalización de estilos del navegador
+   ================================ */
+
+/* === CSS Reset === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* === HTML Base === */
+html {
+    scroll-behavior: smooth;
+}
+
+/* === Body Base === */
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--white);
+}
+
+/* === Container Utility === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* === Lists Reset === */
+ul, ol {
+    list-style: none;
+}
+
+/* === Links Reset === */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* === Images === */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* === Buttons Reset === */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* === Form Elements Reset === */
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+/* === Address Element === */
+address,
+address * {
+    font-style: normal;
+}

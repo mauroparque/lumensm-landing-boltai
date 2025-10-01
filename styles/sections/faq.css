@@ -1,0 +1,35 @@
+/* ================================
+   FAQ SECTION
+   Sección de preguntas frecuentes
+   ================================ */
+
+/* === FAQ Container === */
+.faq {
+    padding: 60px 0;
+    background-color: var(--white);
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.faq .container {
+    padding: 0 15px;
+    max-width: 100%;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 480px) {
+    .faq {
+        padding: 60px 0;
+    }
+}
+
+@media (min-width: 769px) {
+    .faq {
+        padding: 100px 0;
+    }
+    
+    .faq-container {
+        max-width: 800px;
+    }
+}

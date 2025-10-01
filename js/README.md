@@ -14,6 +14,7 @@ js/
 │
 ├── modules/                   # Módulos funcionales
 │   ├── navigation.js         # Navegación y menú móvil
+│   ├── animations.js         # Scroll animations (IntersectionObserver)
 │   ├── carousel.js           # Sistema de carousel
 │   ├── forms.js              # Formularios y validación
 │   ├── notifications.js      # Sistema de notificaciones

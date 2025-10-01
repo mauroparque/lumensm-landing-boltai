@@ -1,0 +1,59 @@
+/* ================================
+   RESPONSIVE UTILITIES
+   Ajustes responsivos globales
+   ================================ */
+
+/* === Mobile-First Container === */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px !important;
+    }
+    
+    /* Override all section paddings for very small screens */
+    .services,
+    .about,
+    .how-it-works,
+    .testimonials,
+    .blog,
+    .contact,
+    .faq {
+        padding: 50px 0 !important;
+    }
+}
+
+/* === Tablet Adjustments === */
+@media (max-width: 768px) {
+    /* Headings responsive sizes are handled in typography.css */
+}
+
+/* === Desktop Optimizations === */
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 40px;
+    }
+}
+
+/* === Large Screens === */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+/* === Print Styles === */
+@media print {
+    .navbar,
+    .whatsapp-float,
+    .scroll-to-top,
+    .hamburger {
+        display: none !important;
+    }
+    
+    body {
+        font-size: 12pt;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+}

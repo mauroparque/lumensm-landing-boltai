@@ -1,0 +1,394 @@
+/* ================================
+   CARDS
+   Componentes de tarjetas reutilizables
+   ================================ */
+
+/* === Service Cards === */
+.service-card {
+    background-color: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+    border: 1px solid var(--gray-200);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.service-card.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--accent-color);
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.service-icon i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.service-card h3 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.service-card p {
+    margin-bottom: 1.5rem;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* === Blog Cards === */
+.blog-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.blog-card.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.blog-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+}
+
+.blog-card:hover .blog-image img {
+    transform: scale(1.05);
+}
+
+.blog-content {
+    padding: 1.5rem;
+}
+
+.blog-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.blog-date {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.blog-category {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--border-radius-lg);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.blog-content h3 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.blog-content p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.blog-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-base);
+}
+
+.blog-link:hover {
+    color: var(--primary-dark);
+}
+
+/* === Testimonial Cards === */
+.testimonial-card {
+    background-color: var(--gray-50);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-base);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.testimonial-card.fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-3px);
+}
+
+.testimonial-content p {
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-info h4 {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.author-info span {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* === Process Cards (Carousel) === */
+.process-card {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    border: 2px solid var(--gray-200);
+    margin-bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, opacity 0.4s ease;
+    flex: 0 0 280px;
+    max-width: 280px;
+    scroll-snap-align: center;
+    opacity: 0.4;
+    transform: scale(0.85);
+}
+
+.process-card.is-active {
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+    transform: scale(1) translateY(-8px);
+    opacity: 1;
+    z-index: 2;
+}
+
+.process-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.process-icon i {
+    font-size: 1.3rem;
+    color: var(--white);
+}
+
+.process-card h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.process-card p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.process-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.process-features li {
+    padding: 0.3rem 0;
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.process-features li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* === Contact Cards === */
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius);
+}
+
+.contact-item i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.contact-item h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.contact-item p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* === Credential Cards === */
+.credential {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+}
+
+.credential i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+    .process-card {
+        flex: 0 0 290px;
+        max-width: 290px;
+        min-height: 320px;
+        padding: 1.25rem;
+        opacity: 0.3;
+        transform: scale(0.85);
+    }
+    
+    .process-card.is-active {
+        opacity: 1;
+        transform: scale(1) translateY(-4px);
+    }
+}
+
+@media (max-width: 480px) {
+    .process-card {
+        flex: 0 0 270px;
+        max-width: 270px;
+        min-height: 300px;
+        padding: 1.25rem;
+        opacity: 0.25;
+        transform: scale(0.8);
+    }
+    
+    .process-card.is-active {
+        transform: scale(1) translateY(-2px);
+    }
+    
+    .process-card h3 {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+    
+    .process-card p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    .process-features li {
+        font-size: 0.85rem;
+        line-height: 1.3;
+    }
+}
+
+@media (min-width: 769px) {
+    .process-card {
+        flex: 0 0 320px;
+        max-width: 320px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .process-card {
+        flex: 0 0 360px;
+        max-width: 360px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .process-card {
+        flex: 0 0 400px;
+        max-width: 400px;
+    }
+}
