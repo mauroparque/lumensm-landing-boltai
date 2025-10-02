@@ -3,6 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 🔒 Security Headers -->
+    <!-- Content Security Policy: Define qué recursos pueden cargarse -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+        font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+        img-src 'self' https: data: blob:;
+        connect-src 'self' https://formspree.io https://wa.me https://api.whatsapp.com;
+        frame-ancestors 'none';
+        base-uri 'self';
+        form-action 'self' https://formspree.io;
+        upgrade-insecure-requests;
+    ">
+    
+    <!-- X-Frame-Options: Previene clickjacking -->
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    
+    <!-- X-Content-Type-Options: Previene MIME type sniffing -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    
+    <!-- Referrer Policy: Controla información enviada en referrer -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <!-- Permissions Policy: Controla características del navegador -->
+    <meta http-equiv="Permissions-Policy" content="
+        geolocation=(),
+        microphone=(),
+        camera=(),
+        payment=(),
+        usb=(),
+        magnetometer=(),
+        gyroscope=(),
+        accelerometer=()
+    ">
+    
     <title>Lumen Salud Mental - Equipo Clínico</title>
     <meta name="description" content="Espacio profesional y cercano para hablar lo que pasa hoy y dar el primer paso con contención y escucha. Respuesta en 24 h hábiles.">
     <meta name="keywords" content="psicólogo, terapia psicológica, consulta virtual, salud mental, atención presencial, ansiedad, depresión, bienestar emocional, insomnio, duelo, miedo, angustia, psicoanálisis, tcc, terapia cognitivo-conductual, consulta inicial, recursos salud mental, confidencialidad, orientación psicológica, equipo clínico, acompañamiento, primer paso, recursos educativos, blog salud mental">
@@ -427,9 +464,18 @@
                     <div class="contact-form">
                         <h3>Envía un Mensaje</h3>
                         <form id="contacto-form" action="https://formspree.io/f/xnngadeq" method="POST">
+                            
+                            <!-- 🍯 Honeypot anti-spam: Campo oculto que solo los bots llenan -->
+                            <input type="text" name="_gotcha" style="display:none !important; position:absolute; left:-9999px; opacity:0; pointer-events:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
+                            
+                            <!-- Configuración de Formspree -->
+                            <input type="hidden" name="_subject" value="Nuevo contacto - Lumen Salud Mental">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_template" value="box">
+                            
                             <div class="form-group">
                                 <label for="nombre" class="sr-only">Nombre completo</label>
-                                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required autocomplete="name">
+                                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required autocomplete="name" maxlength="100">
                             </div>
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email</label>
@@ -451,9 +497,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="mensaje" class="sr-only">Mensaje</label>
-                                <textarea id="mensaje" name="mensaje" placeholder="Cuéntame brevemente cómo puedo ayudarte" rows="5" required autocomplete="off"></textarea>
+                                <textarea id="mensaje" name="mensaje" placeholder="Cuéntame brevemente cómo puedo ayudarte" rows="5" required autocomplete="off" maxlength="5000"></textarea>
+                                <small class="form-help">Máximo 5000 caracteres</small>
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                            
+                            <!-- Disclaimer de privacidad -->
+                            <p class="form-disclaimer" style="font-size: 0.875rem; color: #666; margin-top: 1rem;">
+                                Al enviar este formulario, aceptas nuestra política de privacidad. Tus datos serán tratados de forma confidencial.
+                            </p>
                         </form>
                     </div>
                 </div>

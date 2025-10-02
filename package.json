@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "css:watch": "postcss styles/main.css -o styles/dist/main.css --watch --config postcss.config.modular.js",
+    "css:build": "postcss styles/main.css -o styles/dist/main.min.css --config postcss.config.modular.js",
+    "css:dev": "postcss styles/main.css -o styles/dist/main.dev.css --config postcss.config.modular.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
@@ -21,11 +24,15 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.18",
+    "cross-env": "^10.1.0",
+    "cssnano": "^7.1.1",
     "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
